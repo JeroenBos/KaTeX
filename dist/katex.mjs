@@ -14657,7 +14657,7 @@ var katex = {
     /**
      * Current KaTeX version
      */
-    version: "0.10.0-rc.1",
+    version: "0.0.1",
     /**
      * Renders the given LaTeX into an HTML+MathML combination, and adds
      * it as a child to the specified DOM node.

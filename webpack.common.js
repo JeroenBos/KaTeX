@@ -16,23 +16,23 @@ type Target = {|
  */
 const targets /*: Array<Target> */ = [
     {
-        name: 'katex',
+        name: 'blatex',
         entry: './katex.webpack.js',
         library: 'katex',
     },
-    {
-        name: 'contrib/auto-render',
-        entry: './contrib/auto-render/auto-render.js',
-        library: 'renderMathInElement',
-    },
-    {
-        name: 'contrib/copy-tex',
-        entry: './contrib/copy-tex/copy-tex.js',
-    },
-    {
-        name: 'contrib/mathtex-script-type',
-        entry: './contrib/mathtex-script-type/mathtex-script-type.js',
-    },
+    // {
+    //     name: 'contrib/auto-render',
+    //     entry: './contrib/auto-render/auto-render.js',
+    //     library: 'renderMathInElement',
+    // },
+    // {
+    //     name: 'contrib/copy-tex',
+    //     entry: './contrib/copy-tex/copy-tex.js',
+    // },
+    // {
+    //     name: 'contrib/mathtex-script-type',
+    //     entry: './contrib/mathtex-script-type/mathtex-script-type.js',
+    // },
 ];
 
 /**
