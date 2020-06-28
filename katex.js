@@ -30,6 +30,10 @@ import {defineSymbol} from './src/symbols';
 import {defineMacro} from './src/macros';
 import {setFontMetrics} from './src/fontMetrics';
 
+import utils from "./src/utils";
+import defineFunction from "./src/defineFunction";
+import mathMLTree from "./src/mathMLTree";
+
 declare var __VERSION__: string;
 
 /**
@@ -195,6 +199,12 @@ export default {
      * adds a new macro to builtin macro list
      */
     __defineMacro: defineMacro,
+
+    utils: utils,
+    __defineFunction: defineFunction,
+    __makeSpan: buildCommon.makeSpan,
+    MathNode: mathMLTree.MathNode,
+
     /**
      * Expose the dom tree node types, which can be useful for type checking nodes.
      *
