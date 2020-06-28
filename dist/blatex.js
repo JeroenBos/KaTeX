@@ -15703,6 +15703,10 @@ var parseTree_parseTree = function parseTree(toParse, settings) {
 
 
 
+
+
+
+
 /**
  * Parse and build an expression, and place that expression in the DOM node
  * given.
@@ -15843,6 +15847,12 @@ var katex_renderToHTMLTree = function renderToHTMLTree(expression, options) {
      * adds a new macro to builtin macro list
      */
     __defineMacro: defineMacro,
+
+    utils: utils,
+    __defineFunction: defineFunction,
+    __makeSpan: buildCommon.makeSpan,
+    MathNode: mathMLTree.MathNode,
+
     /**
      * Expose the dom tree node types, which can be useful for type checking nodes.
      *

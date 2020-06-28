@@ -14712,6 +14712,12 @@ var katex = {
      * adds a new macro to builtin macro list
      */
     __defineMacro: defineMacro,
+
+    utils: utils,
+    __defineFunction: defineFunction,
+    __makeSpan: buildCommon.makeSpan,
+    MathNode: mathMLTree.MathNode,
+
     /**
      * Expose the dom tree node types, which can be useful for type checking nodes.
      *
