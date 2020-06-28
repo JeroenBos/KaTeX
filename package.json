@@ -1,6 +1,6 @@
 {
   "name": "blatex",
-  "version": "0.1",
+  "version": "0.0.1",
   "description": "Fast math typesetting for the web in Blazor.",
   "main": "dist/katex.js",
   "homepage": "https://katex.org",
