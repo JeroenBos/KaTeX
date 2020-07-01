@@ -255,6 +255,15 @@ export const buildGroup = function(
         // $FlowFixMe
         let groupNode: HtmlDomNode = groupBuilders[group.type](group, options);
 
+        const location = group.loc;
+        if (location) {
+            if (!groupNode.attributes) {
+                groupNode.attributes = {};
+            }
+            // $FlowFixMe
+            groupNode.attributes["data-loc"] = location.start + "," + location.end;
+        }
+
         // If the size changed between the parent and the current group, account
         // for that size difference.
         if (baseOptions && options.size !== baseOptions.size) {
