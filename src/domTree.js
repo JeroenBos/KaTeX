@@ -371,6 +371,22 @@ export class SymbolNode implements HtmlDomNode {
             }
         }
 
+        // region: my code
+        span = span || document.createElement("span");
+        // $FlowFixMe
+        const attributes = this.attributes;
+        if (attributes) {
+            // Apply attributes
+            for (const attr in attributes) {
+                if (attributes.hasOwnProperty(attr)) {
+                    // $FlowFixMe
+                    node.setAttribute(attr, attributes[attr]);
+                }
+            }
+        }
+        // endregion: my code
+
+
         if (span) {
             span.appendChild(node);
             return span;
@@ -411,6 +427,21 @@ export class SymbolNode implements HtmlDomNode {
             needsSpan = true;
             markup += " style=\"" + utils.escape(styles) + "\"";
         }
+
+
+        // region: my code
+        needsSpan = true;
+        // $FlowFixMe
+        const attributes = this.attributes;
+        if (attributes) {
+            for (const attr in attributes) {
+                if (attributes.hasOwnProperty(attr)) {
+                    markup += ` ${attr}="${utils.escape(attributes[attr])}"`;
+                }
+            }
+        }
+        // endregion: my code
+
 
         const escaped = utils.escape(this.text);
         if (needsSpan) {
