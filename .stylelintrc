@@ -2,6 +2,7 @@
     "extends": "stylelint-config-standard",
     "rules": {
         "indentation": 4,
+        "max-line-length": 140,
     },
     "ignoreFiles": [
         "**/*.min.css"

@@ -183,6 +183,27 @@ export default function defineFunction<NODETYPE: NodeType>({
     htmlBuilder,
     mathmlBuilder,
 }: FunctionDefSpec<NODETYPE>) {
+
+    const sourceLocationHandlerWrapper: ?FunctionHandler<NODETYPE> = handler == null ? null : (
+        context: FunctionContext,
+        args: AnyParseNode[],
+        optArgs: (?AnyParseNode)[],
+    ) => {
+        const originalResult = handler.call(this, context, args, optArgs);
+
+        // $FlowFixMe
+        const result: ParseNode<NODETYPE> = originalResult;
+
+        if (result.loc === undefined) {
+            if (context.token === undefined) {
+                throw new Error('both loc sources are undefined');
+            }
+            result.loc = context.token.loc;
+        }
+
+        return result;
+    };
+
     // Set default values of functions
     const data = {
         type,
@@ -196,7 +217,7 @@ export default function defineFunction<NODETYPE: NodeType>({
         numOptionalArgs: props.numOptionalArgs || 0,
         infix: !!props.infix,
         consumeMode: props.consumeMode,
-        handler: handler,
+        handler: sourceLocationHandlerWrapper,
     };
     for (let i = 0; i < names.length; ++i) {
         // TODO: The value type of _functions should be a type union of all
