@@ -184,7 +184,8 @@ export default function defineFunction<NODETYPE: NodeType>({
     mathmlBuilder,
 }: FunctionDefSpec<NODETYPE>) {
 
-    const sourceLocationHandlerWrapper: ?FunctionHandler<NODETYPE> = handler == null ? null : (
+    const sourceLocationHandlerWrapper: ?FunctionHandler<NODETYPE> =
+    handler == null ? null : (
         context: FunctionContext,
         args: AnyParseNode[],
         optArgs: (?AnyParseNode)[],

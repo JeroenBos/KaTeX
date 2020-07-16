@@ -430,12 +430,12 @@ export class SymbolNode implements HtmlDomNode {
 
 
         // region: my code
-        needsSpan = true;
         // $FlowFixMe
         const attributes = this.attributes;
         if (attributes) {
             for (const attr in attributes) {
                 if (attributes.hasOwnProperty(attr)) {
+                    needsSpan = true;
                     markup += ` ${attr}="${utils.escape(attributes[attr])}"`;
                 }
             }
