@@ -102,7 +102,7 @@ class Options {
         const data = {
             style: this.style,
             size: this.size,
-            textSize: this.textSize,
+            a: this.textSize,
             color: this.color,
             phantom: this.phantom,
             font: this.font,

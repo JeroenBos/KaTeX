@@ -48,7 +48,7 @@ export type FunctionPropSpec = {
     // The greediness of the function to use ungrouped arguments.
     //
     // E.g. if you have an expression
-    //   \sqrt \frac 1 2
+    //   \sqrt \fFunctionDefSpecrac 1 2
     // since \frac has greediness=2 vs \sqrt's greediness=1, \frac
     // will use the two arguments '1' and '2' as its two arguments,
     // then that whole function will be used as the argument to
