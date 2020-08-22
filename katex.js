@@ -23,6 +23,7 @@ import {
     LineNode,
 } from "./src/domTree";
 
+import type {DomSpan} from "./src/domTree";
 import type {SettingsOptions} from "./src/Settings";
 import type {AnyParseNode} from "./src/parseNode";
 
@@ -56,7 +57,7 @@ if (typeof document !== "undefined") {
     if (document.compatMode !== "CSS1Compat") {
         typeof console !== "undefined" && console.warn(
             "Warning: KaTeX doesn't work in quirks mode. Make sure your " +
-                "website has a suitable doctype.");
+            "website has a suitable doctype.");
 
         render = function() {
             throw new ParseError("KaTeX doesn't work in quirks mode.");
@@ -73,6 +74,30 @@ const renderToString = function(
 ): string {
     const markup = renderToDomTree(expression, options).toMarkup();
     return markup;
+};
+
+
+/**
+ * Build the katex build tree from parse tree.
+ */
+const parseToDomTree = function(
+    tree: AnyParseNode[],
+    expression: ?string,
+    options: SettingsOptions,
+): DomSpan {
+    const settings = new Settings(options);
+    try {
+        if (expression == null) {
+            // buildHTMLTree does not depend on expression so that we
+            // can pass null in (against signature)
+            // $FlowFixMe
+            return buildHTMLTree(tree, expression, settings);
+        } else {
+            return buildTree(tree, expression, settings);
+        }
+    } catch (error) {
+        return renderError(error, expression || "?", settings);
+    }
 };
 
 /**
@@ -95,7 +120,7 @@ const renderError = function(
     error,
     expression: string,
     options: Settings,
-) {
+): DomSpan {
     if (options.throwOnError || !(error instanceof ParseError)) {
         throw error;
     }
@@ -113,7 +138,7 @@ const renderError = function(
 const renderToDomTree = function(
     expression: string,
     options: SettingsOptions,
-) {
+): DomSpan {
     const settings = new Settings(options);
     try {
         const tree = parseTree(expression, settings);
@@ -130,7 +155,7 @@ const renderToDomTree = function(
 const renderToHTMLTree = function(
     expression: string,
     options: SettingsOptions,
-) {
+): DomSpan {
     const settings = new Settings(options);
     try {
         const tree = parseTree(expression, settings);
@@ -204,6 +229,7 @@ export default {
     __defineFunction: defineFunction,
     __makeSpan: buildCommon.makeSpan,
     MathNode: mathMLTree.MathNode,
+    __parseToDomTree: parseToDomTree,
 
     /**
      * Expose the dom tree node types, which can be useful for type checking nodes.
