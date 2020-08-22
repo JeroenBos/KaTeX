@@ -1,14 +1,21 @@
 import babel from 'rollup-plugin-babel';
+import alias from 'rollup-plugin-alias';
 
-process.env.BABEL_ENV = 'esm';
+const {targets} = require('./webpack.common');
 
-export default {
-    input: 'katex.js',
+process.env.NODE_ENV = 'esm';
+
+export default targets.map(({name, entry}) => ({
+    input: entry.replace('.webpack', ''),
     output: {
-        file: 'dist/katex.mjs',
+        file: `dist/${name}.mjs`,
         format: 'es',
     },
     plugins: [
-        babel(),
+        babel({runtimeHelpers: true}),
+        alias({
+            katex: '../katex.mjs',
+        }),
     ],
-};
+    external: '../katex.mjs',
+}));

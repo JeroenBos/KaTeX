@@ -8,23 +8,11 @@
 // See https://docusaurus.io/docs/site-config.html for all the possible
 // site configuration options.
 
-// If BASE_URL environment variable is set, use it as baseUrl.
-// If on netlify, use '/'. Otherwise use '/KaTeX/'.
-const baseUrl = process.env.BASE_URL || (process.env.CONTEXT ? '/' : '/KaTeX/');
-
-// Plugin for Remarkable to inject variables
-const {Plugin: Embed} = require('remarkable-embed');
-const embed = new Embed();
-
- // {@stylesheet: path}
-embed.register('stylesheet',
-    path => `<link rel="stylesheet" href="${baseUrl}static/${path}"/>`);
-
 /* List of projects/orgs using your project for the users page */
 const users = [
     {
         caption: 'Khan Academy',
-        image: 'https://avatars0.githubusercontent.com/u/15455',
+        image: '/img/khan-academy.png',
         infoLink: 'https://www.khanacademy.org/',
     },
     {
@@ -34,7 +22,7 @@ const users = [
     },
     {
         caption: 'CoCalc',
-        image: 'https://cdn.rawgit.com/sagemathinc/cocalc/baa4fc57/src/webapp-lib/cocalc-logo.svg',
+        image: '/img/cocalc_logo.svg',
         infoLink: 'https://cocalc.com/',
     },
     {
@@ -49,7 +37,7 @@ const users = [
     },
     {
         caption: 'Expii',
-        image: baseUrl + 'img/expii_logo.png',
+        image: '/img/expii_logo.png',
         infoLink: 'https://www.expii.com/',
     },
     {
@@ -69,7 +57,7 @@ const users = [
     },
     {
         caption: 'Gradescope',
-        image: baseUrl + 'img/gradescope_logo.png',
+        image: '/img/gradescope_logo.png',
         infoLink: 'https://www.gradescope.com/',
     },
     {
@@ -79,7 +67,7 @@ const users = [
     },
     {
         caption: 'Idyll',
-        image: 'https://cdn.rawgit.com/idyll-lang/idyll-lang.github.io/src/images/logo.svg',
+        image: 'https://idyll-lang.org/static/images/logo.svg',
         infoLink: 'https://idyll-lang.org/',
     },
     {
@@ -93,9 +81,19 @@ const users = [
         infoLink: 'https://www.messenger.com/',
     },
     {
+        caption: 'namu.wiki',
+        image: '/img/namuwiki_logo.png',
+        infoLink: 'https://namu.wiki/',
+    },
+    {
+        caption: 'Notable',
+        image: 'https://notable.app/static/images/logo_app.png',
+        infoLink: 'https://notable.app',
+    },
+    {
         caption: 'Observable',
-        image: 'https://pbs.twimg.com/profile_images/970805785503477760/HfTZJiZo_400x400.jpg',
-        infoLink: 'https://beta.observablehq.com/',
+        image: 'https://avatars0.githubusercontent.com/u/30080011',
+        infoLink: 'https://observablehq.com/',
     },
     {
         caption: 'Quill',
@@ -104,7 +102,7 @@ const users = [
     },
     {
         caption: 'Rocket.Chat',
-        image: 'https://cdn.rawgit.com/RocketChat/Rocket.Chat.Artwork/1f7b68b78878fcef47f32aa0965930a1c12cd0b4/Logos/icon.svg',
+        image: '/img/rocketchat_logo.svg',
         infoLink: 'https://rocket.chat/',
     },
     {
@@ -119,12 +117,17 @@ const users = [
     },
     {
         caption: 'StackEdit',
-        image: 'https://cdn.rawgit.com/benweet/stackedit/0632445a/src/assets/iconStackedit.svg',
+        image: '/img/stackedit_logo.svg',
         infoLink: 'https://stackedit.io/',
     },
     {
+        caption: 'Tutti Quanti Shelf',
+        image: 'https://raw.githubusercontent.com/tonton-pixel/tutti-quanti-shelf/master/icons/icon.png',
+        infoLink: 'https://github.com/tonton-pixel/tutti-quanti-shelf/',
+    },
+    {
         caption: 'Vade Mecum Shelf',
-        image: 'https://cdn.rawgit.com/tonton-pixel/vade-mecum-shelf/43013aec/icons/icon.png',
+        image: '/img/vade_mecum_shelf_logo.png',
         infoLink: 'https://github.com/tonton-pixel/vade-mecum-shelf/',
     },
 ];
@@ -132,18 +135,18 @@ const users = [
 const siteConfig = {
     title: 'KaTeX',
     tagline: 'The fastest math typesetting library for the web',
-    url: 'https://khan.github.io',
-    baseUrl,
+    url: 'https://katex.org',
+    baseUrl: '/',
 
     // Used for publishing and more
     projectName: 'KaTeX',
-    organizationName: 'Khan',
+    organizationName: 'KaTeX',
 
     headerLinks: [
-        {href: baseUrl + '#demo', label: 'Try'},
+        {href: '/#demo', label: 'Try'},
         {doc: 'node', label: 'Docs'},
         {page: 'users', label: 'Users'},
-        {href: 'https://github.com/Khan/KaTeX', label: 'GitHub'},
+        {href: 'https://github.com/KaTeX/KaTeX', label: 'GitHub'},
         {search: true},
     ],
     users,
@@ -165,7 +168,7 @@ const siteConfig = {
     copyright:
     'Copyright © ' +
     new Date().getFullYear() +
-    ' Khan Academy',
+    ' Khan Academy and other contributors',
 
     highlight: {
         // Highlight.js theme to use for syntax highlighting in code blocks
@@ -173,17 +176,24 @@ const siteConfig = {
     },
 
     markdownPlugins: [
-        embed.hook,
         require('./lib/remarkable-katex'),
         require('./lib/empty-thead'),
     ],
 
     scripts: [
         'https://buttons.github.io/buttons.js',
-        baseUrl + 'js/scrollspy.js',
+        '/js/scrollspy.js',
     ],
 
     separateCss: ['static/static', 'static\\static'],
+
+    algolia: {
+        apiKey: '46ecd80046d78d4e5d9a5c06f559dfaa',
+        indexName: 'katex',
+        algoliaOptions: {
+            facetFilters: ['language:LANGUAGE', 'version:VERSION'],
+        },
+    },
 
     /* On page navigation for the current documentation page */
     onPageNav: 'separate',
@@ -192,7 +202,7 @@ const siteConfig = {
     ogImage: 'img/og_logo.png',
     twitterImage: 'img/og_logo.png',
 
-    repoUrl: 'https://github.com/Khan/KaTeX',
+    repoUrl: 'https://github.com/KaTeX/KaTeX',
 };
 
 module.exports = siteConfig;

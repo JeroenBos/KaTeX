@@ -13,7 +13,7 @@
  */
 import {scriptFromCodepoint} from "./unicodeScripts";
 import utils from "./utils";
-import svgGeometry from "./svgGeometry";
+import {path} from "./svgGeometry";
 import type Options from "./Options";
 import {DocumentFragment} from "./tree";
 
@@ -24,7 +24,7 @@ import type {VirtualNode} from "./tree";
  * Create an HTML className based on a list of classes. In addition to joining
  * with spaces, we also remove empty classes.
  */
-const createClass = function(classes: string[]): string {
+export const createClass = function(classes: string[]): string {
     return classes.filter(cls => cls).join(" ");
 };
 
@@ -125,7 +125,37 @@ const toMarkup = function(tagName: string): string {
     return markup;
 };
 
-export type CssStyle = {[name: string]: string};
+// Making the type below exact with all optional fields doesn't work due to
+// - https://github.com/facebook/flow/issues/4582
+// - https://github.com/facebook/flow/issues/5688
+// However, since *all* fields are optional, $Shape<> works as suggested in 5688
+// above.
+// This type does not include all CSS properties. Additional properties should
+// be added as needed.
+export type CssStyle = $Shape<{
+    backgroundColor: string,
+    borderBottomWidth: string,
+    borderColor: string,
+    borderRightStyle: string,
+    borderRightWidth: string,
+    borderTopWidth: string,
+    borderStyle: string;
+    borderWidth: string,
+    bottom: string,
+    color: string,
+    height: string,
+    left: string,
+    margin: string,
+    marginLeft: string,
+    marginRight: string,
+    marginTop: string,
+    minWidth: string,
+    paddingLeft: string,
+    position: string,
+    top: string,
+    width: string,
+    verticalAlign: string,
+}> & {};
 
 export interface HtmlDomNode extends VirtualNode {
     classes: string[];
@@ -135,7 +165,6 @@ export interface HtmlDomNode extends VirtualNode {
     style: CssStyle;
 
     hasClass(className: string): boolean;
-    tryCombine(sibling: HtmlDomNode): boolean;
 }
 
 // Span wrapping other DOM nodes.
@@ -189,15 +218,6 @@ export class Span<ChildType: VirtualNode> implements HtmlDomNode {
         return utils.contains(this.classes, className);
     }
 
-    /**
-     * Try to combine with given sibling.  Returns true if the sibling has
-     * been successfully merged into this node, and false otherwise.
-     * Default behavior fails (returns false).
-     */
-    tryCombine(sibling: HtmlDomNode): boolean {
-        return false;
-    }
-
     toNode(): HTMLElement {
         return toNode.call(this, "span");
     }
@@ -239,16 +259,75 @@ export class Anchor implements HtmlDomNode {
         return utils.contains(this.classes, className);
     }
 
-    tryCombine(sibling: HtmlDomNode): boolean {
-        return false;
-    }
-
     toNode(): HTMLElement {
         return toNode.call(this, "a");
     }
 
     toMarkup(): string {
         return toMarkup.call(this, "a");
+    }
+}
+
+/**
+ * This node represents an image embed (<img>) element.
+ */
+export class Img implements VirtualNode {
+    src: string;
+    alt: string;
+    classes: string[];
+    height: number;
+    depth: number;
+    maxFontSize: number;
+    style: CssStyle;
+
+    constructor(
+        src: string,
+        alt: string,
+        style: CssStyle,
+    ) {
+        this.alt = alt;
+        this.src = src;
+        this.classes = ["mord"];
+        this.style = style;
+    }
+
+    hasClass(className: string): boolean {
+        return utils.contains(this.classes, className);
+    }
+
+    toNode(): Node {
+        const node = document.createElement("img");
+        node.src = this.src;
+        node.alt = this.alt;
+        node.className = "mord";
+
+        // Apply inline styles
+        for (const style in this.style) {
+            if (this.style.hasOwnProperty(style)) {
+                // $FlowFixMe
+                node.style[style] = this.style[style];
+            }
+        }
+
+        return node;
+    }
+
+    toMarkup(): string {
+        let markup = `<img  src='${this.src} 'alt='${this.alt}' `;
+
+        // Add the styles, after hyphenation
+        let styles = "";
+        for (const style in this.style) {
+            if (this.style.hasOwnProperty(style)) {
+                styles += `${utils.hyphenate(style)}:${this.style[style]};`;
+            }
+        }
+        if (styles) {
+            markup += ` style="${utils.escape(styles)}"`;
+        }
+
+        markup += "'/>";
+        return markup;
     }
 }
 
@@ -315,34 +394,6 @@ export class SymbolNode implements HtmlDomNode {
 
     hasClass(className: string): boolean {
         return utils.contains(this.classes, className);
-    }
-
-    tryCombine(sibling: HtmlDomNode): boolean {
-        if (!sibling
-            || !(sibling instanceof SymbolNode)
-            || this.italic > 0
-            || createClass(this.classes) !== createClass(sibling.classes)
-            || this.skew !== sibling.skew
-            || this.maxFontSize !== sibling.maxFontSize) {
-            return false;
-        }
-        for (const style in this.style) {
-            if (this.style.hasOwnProperty(style)
-                && this.style[style] !== sibling.style[style]) {
-                return false;
-            }
-        }
-        for (const style in sibling.style) {
-            if (sibling.style.hasOwnProperty(style)
-                && this.style[style] !== sibling.style[style]) {
-                return false;
-            }
-        }
-        this.text += sibling.text;
-        this.height = Math.max(this.height, sibling.height);
-        this.depth = Math.max(this.depth, sibling.depth);
-        this.italic = sibling.italic;
-        return true;
     }
 
     /**
@@ -513,7 +564,7 @@ export class PathNode implements VirtualNode {
 
     constructor(pathName: string, alternate?: string) {
         this.pathName = pathName;
-        this.alternate = alternate;  // Used only for tall \sqrt
+        this.alternate = alternate;  // Used only for \sqrt
     }
 
     toNode(): Node {
@@ -523,7 +574,7 @@ export class PathNode implements VirtualNode {
         if (this.alternate) {
             node.setAttribute("d", this.alternate);
         } else {
-            node.setAttribute("d", svgGeometry.path[this.pathName]);
+            node.setAttribute("d", path[this.pathName]);
         }
 
         return node;
@@ -533,7 +584,7 @@ export class PathNode implements VirtualNode {
         if (this.alternate) {
             return `<path d='${this.alternate}'/>`;
         } else {
-            return `<path d='${svgGeometry.path[this.pathName]}'/>`;
+            return `<path d='${path[this.pathName]}'/>`;
         }
     }
 }

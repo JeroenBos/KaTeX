@@ -20,7 +20,7 @@ export interface VirtualNode {
  */
 export class DocumentFragment<ChildType: VirtualNode>
     implements HtmlDomNode, MathDomNode {
-    children: ChildType[];
+    children: $ReadOnlyArray<ChildType>;
     // HtmlDomNode
     classes: string[];
     height: number;
@@ -28,7 +28,7 @@ export class DocumentFragment<ChildType: VirtualNode>
     maxFontSize: number;
     style: CssStyle;          // Never used; needed for satisfying interface.
 
-    constructor(children: ChildType[]) {
+    constructor(children: $ReadOnlyArray<ChildType>) {
         this.children = children;
         this.classes = [];
         this.height = 0;
@@ -39,10 +39,6 @@ export class DocumentFragment<ChildType: VirtualNode>
 
     hasClass(className: string): boolean {
         return utils.contains(this.classes, className);
-    }
-
-    tryCombine(sibling: HtmlDomNode): boolean {
-        return false;
     }
 
     /** Convert the fragment into a node. */
