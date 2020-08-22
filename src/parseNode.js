@@ -28,7 +28,8 @@ type ParseNodeTypes = {
         type: "blatex",
         mode: Mode,
         loc?: ?SourceLocation,
-        arg: string,
+        key: string,
+        arg?: string,
     |},
     "array": {|
         type: "array",

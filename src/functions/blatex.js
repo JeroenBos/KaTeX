@@ -5,30 +5,38 @@ import buildCommon from "../buildCommon";
 import mathMLTree from "../mathMLTree";
 import type {MathDomNode} from "../mathMLTree";
 
+// syntax: \\blatex{f_name} ( { optional_arg } )?
+// where
+//    f_name: the name of the blatex component to render here
+//    optional_arg: a string argument to be passed to the component
+
 defineFunction({
     type: "blatex",
     names: ["\\blatex"],
     props: {
-        numOptionalArgs: 0,
+        // two arguments: key for the blatex component, arg for component
+        numOptionalArgs: 1,
         numArgs: 1,
-        argTypes: ["text"],
+        argTypes: ["text", "text"],
     },
     handler({parser}, args, optArgs) {
         const ord = assertNodeType(args[0], "ordgroup");
 
-        if (ord.body.length > 1) {
-            throw new Error('ord.body.length > 1');
-        }
-
-        const arg = ord.body.length !== 0
+        const key = ord.body.length !== 0
             ? assertNodeType(ord.body[0], "textord").text
             : "";
 
-        return {
+        // const arg = ord.body.length >= 2
+        //     ? assertNodeType(ord.body[1], "textord").text
+        //     : "";
+
+        const result = {
             type: "blatex",
             mode: parser.mode,
-            arg: arg,
+            key: key,
         };
+
+        return result;
     },
     htmlBuilder(group, options) {
         const span = buildCommon.makeSpan([], [], options);
