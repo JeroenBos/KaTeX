@@ -11,40 +11,30 @@ import type {MathDomNode} from "../mathMLTree";
 //    optional_arg: a string argument to be passed to the component
 
 defineFunction({
-    type: "blatex",
+    type: "raw",
     names: ["\\blatex"],
     props: {
-        // two arguments: key for the blatex component, arg for component
-        numOptionalArgs: 1,
+        numOptionalArgs: 0,
         numArgs: 1,
-        argTypes: ["text", "text"],
+        argTypes: ["raw"], // optional argument types come first
+        allowedInText: true,
     },
-    handler({parser}, args, optArgs) {
-        const ord = assertNodeType(args[0], "ordgroup");
+    handler({parser, funcName, token}, args, optArgs) {
+        const value = assertNodeType(args[0], "raw").string.trim();
 
-        const key = ord.body.length !== 0
-            ? assertNodeType(ord.body[0], "textord").text
-            : "";
-
-        // const arg = ord.body.length >= 2
-        //     ? assertNodeType(ord.body[1], "textord").text
-        //     : "";
-
-        const result = {
-            type: "blatex",
+        return {
+            type: "raw",
             mode: parser.mode,
-            key: key,
+            string: value,
         };
-
-        return result;
     },
-    htmlBuilder(group, options) {
+    htmlBuilder(group, options) {  // group is of type ParseNodeTypes["raw"]
         const span = buildCommon.makeSpan([], [], options);
-        span.setAttribute("data-arg", group.arg);
+        span.setAttribute("data-blatex", group.string);
         return span;
     },
     mathmlBuilder(group, options) {
-        const children: MathDomNode[] = group.loc
+        const children: MathDomNode[] = group.loc && group.arg
             ? [new mathMLTree.TextNode(group.arg)]
             : [];
         const annotation = new mathMLTree.MathNode("annotation", children);
