@@ -90,6 +90,7 @@ const parseToDomTree = function(
         if (expression == null) {
             // buildHTMLTree does not depend on expression so that we
             // can pass null in (against signature)
+            // Without the expression we miss out on the MathML part
             // $FlowFixMe
             return buildHTMLTree(tree, expression, settings);
         } else {
@@ -165,6 +166,15 @@ const renderToHTMLTree = function(
     }
 };
 
+const renderTreeToString = function(
+    tree: AnyParseNode[],
+    expression: ?string,
+    options: SettingsOptions,
+): string {
+    // Without the expression the MathML part is not returned
+    return parseToDomTree(tree, expression, options).toMarkup();
+};
+
 export default {
     /**
      * Current KaTeX version
@@ -230,6 +240,7 @@ export default {
     __makeSpan: buildCommon.makeSpan,
     MathNode: mathMLTree.MathNode,
     __parseToDomTree: parseToDomTree,
+    __renderTreeToString: renderTreeToString,
 
     /**
      * Expose the dom tree node types, which can be useful for type checking nodes.
