@@ -562,10 +562,16 @@ export default class Parser {
                 }
                 const token = this.parseStringGroup("raw", optional, true);
                 if (token) {
+                    // because of the ridiculous design that this doesn't hold:
+                    // assert token.loc.start + token.text.length == token.loc.end
+                    // we enforce it:
+                    const loc = {...token.loc};
+                    loc.end = token.loc.start + token.text.length;
                     return {
                         type: "raw",
                         mode: "text",
                         string: token.text,
+                        loc: loc,
                     };
                 } else {
                     throw new ParseError("Expected raw group", this.fetch());
