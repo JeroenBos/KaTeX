@@ -5,13 +5,8 @@ import buildCommon from "../buildCommon";
 import mathMLTree from "../mathMLTree";
 import type {MathDomNode} from "../mathMLTree";
 
-// syntax: \\blatex{f_name} ( { optional_arg } )?
-// where
-//    f_name: the name of the blatex component to render here
-//    optional_arg: a string argument to be passed to the component
-
 defineFunction({
-    type: "raw",
+    type: "blatex",
     names: ["\\blatex"],
     props: {
         numOptionalArgs: 0,
@@ -20,18 +15,31 @@ defineFunction({
         allowedInText: true,
     },
     handler({parser, funcName, token}, args, optArgs) {
-        const value = assertNodeType(args[0], "raw").string.trim();
+        const rawArgNode = assertNodeType(args[0], "raw");
+        const value = rawArgNode.string.trim();
+        const argLoc = {start: rawArgNode.loc.start, end: rawArgNode.loc.end};
 
         return {
-            type: "raw",
+            type: "blatex",
             mode: parser.mode,
-            string: value,
+            args: [
+                {
+                    type: "raw",
+                    mode: parser.mode,
+                    string: value,
+                    loc: argLoc,
+                },
+            ],
         };
     },
     htmlBuilder(group, options) {  // group is of type ParseNodeTypes["raw"]
-        const span = buildCommon.makeSpan([], [], options);
-        span.setAttribute("data-blatex", group.string);
-        return span;
+        const element = buildCommon.makeSpan([], [], options);
+        const argNode = group.args[0];
+        element.setAttribute("data-blatex", argNode.string);
+        element.setAttribute("data-loc", argNode.loc.start + "," + argNode.loc.end);
+
+        const wrapper = buildCommon.makeSpan([], [element], options);
+        return wrapper;
     },
     mathmlBuilder(group, options) {
         const children: MathDomNode[] = group.loc && group.arg
