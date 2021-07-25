@@ -563,7 +563,8 @@ export default class Parser {
                 const token = this.parseStringGroup("raw", optional, true);
                 if (token) {
                     if (!token.loc) {
-                        throw new ParseError("Expected raw group with source location");
+                        throw new ParseError(
+                            "Expected raw group with source location (blatex)");
                     }
                     // because of the ridiculous design that this doesn't hold:
                     // assert token.loc.start + token.text.length == token.loc.end

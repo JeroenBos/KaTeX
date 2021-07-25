@@ -187,7 +187,7 @@ export default function defineFunction<NODETYPE: NodeType>({
         const result: ParseNode<NODETYPE> = originalResult;
 
         if (result.loc === undefined) {
-            if (context.token === undefined) {
+            if (context.token === undefined || !context.token.loc) {
                 throw new Error('both loc sources are undefined');
             }
             result.loc = context.token.loc;
