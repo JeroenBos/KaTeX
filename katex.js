@@ -68,7 +68,7 @@ if (typeof document !== "undefined") {
 /**
  * Parse and build an expression, and return the markup for that.
  */
-const renderToString = function(
+export const renderToString = function(
     expression: string,
     options: SettingsOptions,
 ): string {
