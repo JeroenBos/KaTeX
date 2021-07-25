@@ -27,12 +27,6 @@ export type AnyParseNode = $Values<ParseNodeTypes>;
 
 // Map from `NodeType` to the corresponding `ParseNode`.
 type ParseNodeTypes = {
-    "blatex": {|
-        type: "blatex",
-        mode: Mode,
-        loc?: ?SourceLocation,
-        args: AnyParseNode[],
-    |},
     "array": {|
         type: "array",
         mode: Mode,

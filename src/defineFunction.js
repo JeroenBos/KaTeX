@@ -208,7 +208,7 @@ export default function defineFunction<NODETYPE: NodeType>({
             : props.allowedInMath,
         numOptionalArgs: props.numOptionalArgs || 0,
         infix: !!props.infix,
-        consumeMode: props.consumeMode,
+        // consumeMode: props.consumeMode,
         handler: sourceLocationHandlerWrapper,
     };
     for (let i = 0; i < names.length; ++i) {

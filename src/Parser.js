@@ -562,11 +562,17 @@ export default class Parser {
                 }
                 const token = this.parseStringGroup("raw", optional, true);
                 if (token) {
+                    if (!token.loc) {
+                        throw new ParseError("Expected raw group with source location");
+                    }
                     // because of the ridiculous design that this doesn't hold:
                     // assert token.loc.start + token.text.length == token.loc.end
                     // we enforce it:
-                    const loc = {...token.loc};
-                    loc.end = token.loc.start + token.text.length;
+                    const loc = new SourceLocation(
+                        token.loc.lexer,
+                        token.loc.start,
+                        token.loc.start + token.text.length
+                    );
                     return {
                         type: "raw",
                         mode: "text",

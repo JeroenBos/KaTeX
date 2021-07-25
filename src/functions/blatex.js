@@ -6,7 +6,7 @@ import mathMLTree from "../mathMLTree";
 import type {MathDomNode} from "../mathMLTree";
 
 defineFunction({
-    type: "blatex",
+    type: "raw",
     names: ["\\blatex"],
     props: {
         numOptionalArgs: 0,
@@ -17,7 +17,11 @@ defineFunction({
     handler({parser, funcName, token}, args, optArgs) {
         const rawArgNode = assertNodeType(args[0], "raw");
         const value = rawArgNode.string.trim();
-        const argLoc = {start: rawArgNode.loc.start, end: rawArgNode.loc.end};
+        const loc = rawArgNode.loc;
+        if (!loc) {
+            throw new Error("\\blatex expected a non-null, non-undefined loc");
+        }
+        const argLoc = {start: loc.start, end: loc.end};
 
         return {
             type: "blatex",
@@ -42,7 +46,7 @@ defineFunction({
         return wrapper;
     },
     mathmlBuilder(group, options) {
-        const children: MathDomNode[] = group.loc && group.arg
+        const children: MathDomNode[] = group.loc && group.string
             ? [new mathMLTree.TextNode(group.arg)]
             : [];
         const annotation = new mathMLTree.MathNode("annotation", children);
