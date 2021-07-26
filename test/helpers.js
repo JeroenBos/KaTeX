@@ -177,3 +177,67 @@ export const expectEquivalent = (actual, expected, settings, mode, expand) => {
             },
     };
 };
+
+const ignoredChars = [' ', '\n', '\t', '\r'];
+export const assertEquivalentHtml = (actual, expected) => {
+    // asserts that the two strings are equivalent,
+    // except that 'expected' can contain extra ignoredChars anywhere
+
+    let e = 0;
+    let actualLineStartIndex = 0;
+    let lineCount = 0;
+    let lineStartIndex = 0;
+    for (let i = 0; i < actual.length; i++) {
+        const char = actual.charAt(i);
+        do {
+            if (e >= expected.length) {
+                log("End of expected sequence reached");
+                throw new Error("HTML not equivalent");
+            }
+            const eChar = expected.charAt(e);
+            if (eChar === char) {
+                e++;
+                break;
+            }
+            if (eChar === '\n') {
+                lineStartIndex = e + 1;
+                actualLineStartIndex = i;
+                lineCount++;
+            }
+            if (ignoredChars.includes(eChar)) {
+                e++;
+                continue;
+            }
+            const failedLine = substringToFirstOccurrenceOrEnd(expected,
+                                                               lineStartIndex,
+                                                               '\n').trim();
+            const actualFailed = actual.substring(actualLineStartIndex,
+                                                  Math.min(actual.length, i + 50));
+            // eslint-disable-next-line max-len
+            log(`HTML not equivalent at line ${lineCount.toString()}: '${failedLine}'. Instead got: '${actualFailed}'`);
+            throw new Error("HTML not equivalent");
+            // eslint-disable-next-line no-constant-condition
+        } while (true);
+    }
+    for (let e2 = e; e2 < expected.length; e2++) {
+        if (!ignoredChars.includes(expected.charAt(e2))) {
+            // eslint-disable-next-line max-len
+            log(`expected sequence contains more characters: ${expected.substring(e)}`);
+            throw new Error("HTML not equivalent");
+        }
+    }
+};
+
+const substringToFirstOccurrenceOrEnd = (string, startIndex, item) => {
+    const endIndex = indexOfOrEnd(string, item, startIndex);
+    return string.substring(startIndex, endIndex);
+};
+const indexOfOrEnd = (string, item, startIndex) => {
+    const index = string.indexOf(item, startIndex);
+    return index === -1 ? length : index;
+};
+
+const log = (string) => {
+    // eslint-disable-next-line no-console
+    console.log(string);
+};

@@ -1,9 +1,10 @@
+/* eslint-disable max-len */
 import {assertNodeType} from "../src/parseNode";
 import parseTree from "../src/parseTree";
-import {nonstrictSettings} from "./helpers";
+import {nonstrictSettings, assertEquivalentHtml} from "./helpers";
 import {renderToString} from "../katex";
 
-describe("blatex", function() {
+describe("\\blatex{}", function() {
     it("should parse", function() {
         const tree = parseTree("\\blatex{}", nonstrictSettings);
 
@@ -17,10 +18,29 @@ describe("blatex", function() {
         expect(root.args[0].string === "");
     });
 
-    it("should render", function() {
+    it("render not equivalent", function() {
         const html = renderToString("\\blatex{}");
 
-        expect(html.length !== 0);
+        assertEquivalentHtml(html, `
+            <span class="katex">
+                <span class="katex-mathml">
+                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                        <semantics><mrow><annotation></annotation></mrow>
+                            <annotation encoding="application/x-tex">\\blatex{}</annotation>
+                        </semantics>
+                    </math>
+                </span>
+                <span class="katex-html" aria-hidden="true">
+                    <span class="base">
+                        <span class="strut" style="height:0em;vertical-align:0em;">
+                        </span>
+                        <span data-loc="0,8">
+                            <span data-blatex="" data-loc="0,8">
+                            </span>
+                        </span>
+                    </span>
+                </span>
+            </span>`
+        );
     });
-
 });
