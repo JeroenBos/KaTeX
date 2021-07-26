@@ -39,4 +39,27 @@ export default class SourceLocation {
                     first.loc.lexer, first.loc.start, second.loc.end);
         }
     }
+    /**
+     * Merges two `SourceLocation`s.
+     */
+    static merge(
+        first?: ?SourceLocation,
+        second?: ?SourceLocation,
+    ): ?SourceLocation {
+        if (!second) {
+            return first;
+        } else if (!first || !second) {
+            return null;
+        } else if (first.lexer !== second.lexer
+               && first.lexer
+               && second.lexer) {
+            return null;
+        } else {
+            return new SourceLocation(
+                    first.lexer || second.lexer,
+                    first.start,
+                    second.end
+                );
+        }
+    }
 }

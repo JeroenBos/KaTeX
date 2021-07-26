@@ -17,9 +17,15 @@ defineFunction({
         allowedInText: true,
     },
     handler({parser, funcName, token}, args, optArgs) {
+        if (token === undefined) {
+            throw new Error("nodes of type blatex require the lexical token");
+        }
+
         const argNode = assertNodeType(args[0], "raw");
         const value = argNode.string.trim();
-        const loc = assertLocationSpecified(argNode.loc);
+        const funcNameTokenLoc = assertLocationSpecified(token.loc);
+        const argLoc = assertLocationSpecified(argNode.loc);
+        const funcCallLoc = SourceLocation.merge(funcNameTokenLoc, argLoc);
         const result: ParseNode<"blatex"> = {
             type: "blatex",
             mode: parser.mode,
@@ -30,7 +36,7 @@ defineFunction({
                     string: value,
                 },
             ],
-            loc: loc,
+            loc: funcCallLoc,
         };
         return result;
     },
@@ -41,7 +47,7 @@ defineFunction({
         const loc = assertLocationSpecified(group.loc);
 
         element.setAttribute("data-blatex", argNode.string);
-        element.setAttribute("data-loc",  loc.start + "," +  loc.end);
+        element.setAttribute("data-loc", loc.start + "," + loc.end);
 
         const wrapper = buildCommon.makeSpan([], [element], options);
         return wrapper;
@@ -60,7 +66,9 @@ defineFunction({
 
 
 function assertLocationSpecified(loc: ?SourceLocation): SourceLocation {
-    if (!loc) {throw new Error("\\blatex expected a non-null, non-undefined loc");}
+    if (!loc) {
+        throw new Error("\\blatex expected a non-null, non-undefined loc");
+    }
     // for good measure, just clone it:
     return new SourceLocation(loc.lexer, loc.start, loc.end);
 }
