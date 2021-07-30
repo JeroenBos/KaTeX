@@ -2,6 +2,7 @@
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const {version} = require("./package.json");
 
@@ -138,6 +139,12 @@ function createConfig(target /*: Target */, dev /*: boolean */,
         },
         externals: 'katex',
         plugins: [
+            new CopyPlugin([
+                {
+                    from: "./blatex.d.ts",
+                    to: "blatex.d.ts", // is relative to ./dist/
+                },
+            ]),
             !dev && new MiniCssExtractPlugin({
                 filename: minimize ? '[name].min.css' : '[name].css',
             }),
