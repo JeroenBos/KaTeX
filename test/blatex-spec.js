@@ -2,7 +2,7 @@
 import {assertNodeType} from "../src/parseNode";
 import parseTree from "../src/parseTree";
 import {nonstrictSettings, assertEquivalentHtml} from "./helpers";
-import {renderToString} from "../katex";
+import katex from "../katex";
 
 describe("\\blatex{}", function() {
     it("should parse", function() {
@@ -19,7 +19,7 @@ describe("\\blatex{}", function() {
     });
 
     it("render not equivalent", function() {
-        const html = renderToString("\\blatex{}");
+        const html = katex.renderToString("\\blatex{}");
 
         assertEquivalentHtml(html, `
             <span class="katex">
