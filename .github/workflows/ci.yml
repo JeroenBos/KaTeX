@@ -74,6 +74,7 @@ jobs:
         YARN_ENABLE_SCRIPTS: 0 # disable postinstall scripts
     - name: Run semantic-release
       run: yarn run semantic-release --debug
+      if: false  # Not relevant for fork
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
