@@ -9,7 +9,7 @@
  */
 
 import ParseError from "./src/ParseError";
-import Settings from "./src/Settings";
+import Settings, {SETTINGS_SCHEMA} from "./src/Settings";
 
 import {buildTree, buildHTMLTree} from "./src/buildTree";
 import parseTree from "./src/parseTree";
@@ -26,9 +26,11 @@ import {
 import type {DomSpan} from "./src/domTree";
 import type {SettingsOptions} from "./src/Settings";
 import type {AnyParseNode} from "./src/parseNode";
+import type {DomSpan} from "./src/domTree";
 
 import {defineSymbol} from './src/symbols';
-import {defineMacro} from './src/macros';
+import defineFunction from './src/defineFunction';
+import defineMacro from './src/defineMacro';
 import {setFontMetrics} from './src/fontMetrics';
 
 import utils from "./src/utils";
@@ -41,7 +43,7 @@ declare var __VERSION__: string;
  * Parse and build an expression, and place that expression in the DOM node
  * given.
  */
-let render = function(
+let render: (string, Node, SettingsOptions) => void = function(
     expression: string,
     baseNode: Node,
     options: SettingsOptions,
@@ -57,7 +59,7 @@ if (typeof document !== "undefined") {
     if (document.compatMode !== "CSS1Compat") {
         typeof console !== "undefined" && console.warn(
             "Warning: KaTeX doesn't work in quirks mode. Make sure your " +
-            "website has a suitable doctype.");
+                "website has a suitable doctype.");
 
         render = function() {
             throw new ParseError("KaTeX doesn't work in quirks mode.");
@@ -179,7 +181,7 @@ export default {
     /**
      * Current KaTeX version
      */
-    version: __VERSION__,
+    version,
     /**
      * Renders the given LaTeX into an HTML+MathML combination, and adds
      * it as a child to the specified DOM node.
@@ -194,6 +196,10 @@ export default {
      * KaTeX error, usually during parsing.
      */
     ParseError,
+    /**
+     * The schema of Settings
+     */
+    SETTINGS_SCHEMA,
     /**
      * Parses the given LaTeX into KaTeX's internal parse tree structure,
      * without rendering to HTML or MathML.
@@ -231,6 +237,12 @@ export default {
      */
     __defineSymbol: defineSymbol,
     /**
+     * adds a new function to builtin function list,
+     * which directly produce parse tree elements
+     * and have their own html/mathml builders
+     */
+    __defineFunction: defineFunction,
+    /**
      * adds a new macro to builtin macro list
      */
     __defineMacro: defineMacro,
@@ -245,16 +257,9 @@ export default {
     /**
      * Expose the dom tree node types, which can be useful for type checking nodes.
      *
-     * NOTE: This method is not currently recommended for public use.
+     * NOTE: These methods are not currently recommended for public use.
      * The internal tree representation is unstable and is very likely
      * to change. Use at your own risk.
      */
-    __domTree: {
-        Span,
-        Anchor,
-        SymbolNode,
-        SvgNode,
-        PathNode,
-        LineNode,
-    },
+    __domTree,
 };

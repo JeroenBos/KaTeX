@@ -1,5 +1,3 @@
-/* global expect: false */
-
 import stringify from 'json-stable-stringify';
 import Lexer from "../src/Lexer";
 import ParseError from "../src/ParseError";
@@ -58,8 +56,8 @@ expect.extend({
         return expectKaTeX(expr, settings, Mode.PARSE, this.isNot);
     },
 
-    toFailWithParseError: function(expr, expected = ParseError) {
-        return expectKaTeX(expr, undefined, Mode.PARSE, this.isNot, expected);
+    toFailWithParseError: function(expr, expected = ParseError, settings) {
+        return expectKaTeX(expr, settings, Mode.PARSE, this.isNot, expected);
     },
 
     toBuild(expr, settings) {

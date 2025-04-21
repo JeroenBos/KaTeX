@@ -16,6 +16,11 @@ const users = [
         infoLink: 'https://www.khanacademy.org/',
     },
     {
+        caption: 'BearBei 貝貝',
+        image: 'https://bearbei.com/pic/bearbeiLogoForKatexWebsite.png',
+        infoLink: 'https://bearbei.com',
+    },
+    {
         caption: 'CindyJS',
         image: 'https://cindyjs.org/assets/img/logo.png',
         infoLink: 'https://cindyjs.org/',
@@ -24,6 +29,11 @@ const users = [
         caption: 'CoCalc',
         image: '/img/cocalc_logo.svg',
         infoLink: 'https://cocalc.com/',
+    },
+    {
+        caption: 'Doctave',
+        image: 'https://www.doctave.com/assets/img/katex-integration-logo.webp',
+        infoLink: 'https://www.doctave.com/',
     },
     {
         caption: 'Dropbox Paper',
@@ -47,8 +57,8 @@ const users = [
     },
     {
         caption: 'Gatsby',
-        image: 'https://www.gatsbyjs.org/monogram.svg',
-        infoLink: 'https://www.gatsbyjs.org/',
+        image: 'https://www.gatsbyjs.com/Gatsby-Monogram.svg',
+        infoLink: 'https://www.gatsbyjs.com/',
     },
     {
         caption: 'Gitter',
@@ -76,9 +86,24 @@ const users = [
         infoLink: 'https://www.intmath.com/',
     },
     {
+        caption: 'Marker',
+        image: 'https://raw.githubusercontent.com/fabiocolacio/Marker/master/data/com.github.fabiocolacio.marker.svg',
+        infoLink: 'https://fabiocolacio.github.io/Marker/',
+    },
+    {
+        caption: 'MathWills',
+        image: '/img/mathwills_logo.svg',
+        infoLink: 'https://www.mathwills.com/',
+    },
+    {
         caption: 'Messenger',
         image: 'https://en.facebookbrand.com/wp-content/uploads/2016/09/messenger_icon2.png',
         infoLink: 'https://www.messenger.com/',
+    },
+    {
+        caption: 'MonsterWriter',
+        image: 'https://www.monsterwriter.com/assets/logo-200.png',
+        infoLink: 'https://www.monsterwriter.com/',
     },
     {
         caption: 'namu.wiki',
@@ -106,9 +131,24 @@ const users = [
         infoLink: 'https://rocket.chat/',
     },
     {
+        caption: 'Slab',
+        image: '/img/slab-logo.png',
+        infoLink: 'https://slab.com/',
+    },
+    {
         caption: 'Slides',
         image: 'https://s3.amazonaws.com/uploads.uservoice.com/logo/design_setting/116173/original/slides-symbol-150x150.png',
         infoLink: 'https://slides.com/',
+    },
+    {
+        caption: 'SnapXam',
+        image: 'https://www.snapxam.com/assets/images/snapxam-logo2-transparent.png',
+        infoLink: 'https://www.snapxam.com',
+    },
+    {
+        caption: 'Snip',
+        image: '/img/snip.png',
+        infoLink: 'https://getsnip.io',
     },
     {
         caption: 'Spinning Numbers',
@@ -121,6 +161,21 @@ const users = [
         infoLink: 'https://stackedit.io/',
     },
     {
+        caption: 'Tamasha',
+        image: 'https://github.com/kookma/TW-Tamasha/raw/main/docs/tamasha.png',
+        infoLink: 'https://kookma.github.io/TW-Tamasha/',
+    },
+    {
+        caption: 'Techambition',
+        image: '/img/techambition.png',
+        infoLink: 'https://techambition.com',
+    },
+    {
+        caption: 'TiddlyWiki',
+        image: '/img/tiddlywiki_logo.svg',
+        infoLink: 'https://tiddlywiki.com/',
+    },
+    {
         caption: 'Tutti Quanti Shelf',
         image: 'https://raw.githubusercontent.com/tonton-pixel/tutti-quanti-shelf/master/icons/icon.png',
         infoLink: 'https://github.com/tonton-pixel/tutti-quanti-shelf/',
@@ -130,7 +185,14 @@ const users = [
         image: '/img/vade_mecum_shelf_logo.png',
         infoLink: 'https://github.com/tonton-pixel/vade-mecum-shelf/',
     },
+    {
+        caption: 'zzllrr Mather',
+        image: 'https://github.com/zzllrr/mather/raw/master/img/logo.jpg',
+        infoLink: 'https://github.com/zzllrr/mather',
+    },
 ];
+
+const {version} = require('../package.json');
 
 const siteConfig = {
     title: 'KaTeX',
@@ -145,6 +207,8 @@ const siteConfig = {
     headerLinks: [
         {href: '/#demo', label: 'Try'},
         {doc: 'node', label: 'Docs'},
+        // always link to the latest version page
+        {href: 'https://katex.org/versions.html', label: 'v' + version},
         {page: 'users', label: 'Users'},
         {href: 'https://github.com/KaTeX/KaTeX', label: 'GitHub'},
         {search: true},
@@ -157,6 +221,7 @@ const siteConfig = {
     favicon: '../favicon.ico',
 
     disableHeaderTitle: true,
+    scrollToTop: true,
 
     /* colors for website */
     colors: {
@@ -182,7 +247,6 @@ const siteConfig = {
 
     scripts: [
         'https://buttons.github.io/buttons.js',
-        '/js/scrollspy.js',
     ],
 
     separateCss: ['static/static', 'static\\static'],
@@ -191,7 +255,7 @@ const siteConfig = {
         apiKey: '46ecd80046d78d4e5d9a5c06f559dfaa',
         indexName: 'katex',
         algoliaOptions: {
-            facetFilters: ['language:LANGUAGE', 'version:VERSION'],
+            facetFilters: ['language:LANGUAGE'],
         },
     },
 

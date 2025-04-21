@@ -1,7 +1,4 @@
 /* eslint max-len:0 */
-/* global expect: false */
-/* global it: false */
-/* global describe: false */
 import Settings from "../src/Settings";
 import {scriptFromCodepoint, supportedCodepoint} from "../src/unicodeScripts";
 import {strictSettings, nonstrictSettings} from "./helpers";
@@ -10,6 +7,12 @@ describe("unicode", function() {
     it("should build Latin-1 inside \\text{}", function() {
         expect`\text{ÀÁÂÃÄÅÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝàáâãäåèéêëìíîïñòóôõöùúûüýÿÆÇÐØÞßæçðøþ}`
             .toBuild();
+    });
+
+    it("should build Latin-1 inside \\text{} like accent commands", function() {
+        expect`\text{ÀÁÂÃÄÅÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝàáâãäåèéêëìíîïñòóôõöùúûüýÿÇç}`
+            .toParseLike`\text{\`A\'A\^A\~A\"A\r A\`E\'E\^E\"E\`I\'I\^I\"I\~N\`O\'O\^O\~O\"O\`U\'U\^U\"U\'Y\`a\'a\^a\~a\"a\r a\`e\'e\^e\"e\`ı\'ı\^ı\"ı\~n\`o\'o\^o\~o\"o\`u\'u\^u\"u\'y\"y\c C\c c}`;
+        // TODO(edemaine): A few characters don't have analogs yet.
     });
 
     it("should not parse Latin-1 outside \\text{} with strict", function() {
@@ -59,15 +62,15 @@ describe("unicode", function() {
         expect`여보세요`.not.toParse(strictSettings);
     });
 
-    it("should build Devangari inside \\text{}", function() {
+    it("should build Devanagari inside \\text{}", function() {
         expect`\text{नमस्ते}`.toBuild();
     });
 
-    it("should build Devangari outside \\text{}", function() {
+    it("should build Devanagari outside \\text{}", function() {
         expect`नमस्ते`.toBuild(nonstrictSettings);
     });
 
-    it("should not parse Devangari outside \\text{} with strict", function() {
+    it("should not parse Devanagari outside \\text{} with strict", function() {
         expect`नमस्ते`.not.toParse(strictSettings);
     });
 
@@ -81,6 +84,11 @@ describe("unicode", function() {
 
     it("should not parse Georgian outside \\text{} with strict", function() {
         expect`გამარჯობა`.not.toParse(strictSettings);
+    });
+
+    it("should build Armenian both inside and outside \\text{}", function() {
+        expect`ԱԲԳաբգ`.toBuild(nonstrictSettings);
+        expect`\text{ԱԲԳաբգ}`.toBuild(nonstrictSettings);
     });
 
     it("should build extended Latin characters inside \\text{}", function() {
@@ -116,8 +124,10 @@ describe("unicode", function() {
 
 describe("unicodeScripts", () => {
     const scriptRegExps = {
+        // eslint-disable-next-line no-misleading-character-class
         latin: /[\u0100-\u024f\u0300-\u036f]/,
         cyrillic: /[\u0400-\u04ff]/,
+        armenian: /[\u0530-\u058F]/,
         brahmic: /[\u0900-\u109F]/,
         georgian: /[\u10a0-\u10ff]/,
         cjk: /[\u3000-\u30FF\u4E00-\u9FAF\uFF00-\uFF60]/,

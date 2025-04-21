@@ -45,6 +45,23 @@ type ParseNodeTypes = {
         body: AnyParseNode[][], // List of rows in the (2D) array.
         rowGaps: (?Measurement)[],
         hLinesBeforeRow: Array<boolean[]>,
+        // Whether each row should be automatically numbered, or an explicit tag
+        tags?: (boolean | AnyParseNode[])[],
+        leqno?: boolean,
+        isCD?: boolean,
+    |},
+    "cdlabel": {|
+        type: "cdlabel",
+        mode: Mode,
+        loc?: ?SourceLocation,
+        side: string,
+        label: AnyParseNode,
+    |},
+    "cdlabelparent": {|
+        type: "cdlabelparent",
+        mode: Mode,
+        loc?: ?SourceLocation,
+        fragment: AnyParseNode,
     |},
     "color": {|
         type: "color",
@@ -61,7 +78,7 @@ type ParseNodeTypes = {
     |},
     // To avoid requiring run-time type assertions, this more carefully captures
     // the requirements on the fields per the op.js htmlBuilder logic:
-    // - `body` and `value` are NEVER set simultanouesly.
+    // - `body` and `value` are NEVER set simultaneously.
     // - When `symbol` is true, `body` is set.
     "op": {|
         type: "op",
@@ -213,7 +230,6 @@ type ParseNodeTypes = {
         type: "cr",
         mode: Mode,
         loc?: ?SourceLocation,
-        newRow: boolean,
         newLine: boolean,
         size: ?Measurement,
     |},
@@ -260,6 +276,12 @@ type ParseNodeTypes = {
         rightDelim: ?string,
         size: StyleStr | "auto",
         barSize: Measurement | null,
+    |},
+    "hbox": {|
+        type: "hbox",
+        mode: Mode,
+        loc?: ?SourceLocation,
+        body: AnyParseNode[],
     |},
     "horizBrace": {|
         type: "horizBrace",
@@ -398,6 +420,13 @@ type ParseNodeTypes = {
         loc?: ?SourceLocation,
         body: AnyParseNode,
     |},
+    "pmb": {|
+        type: "pmb",
+        mode: Mode,
+        loc?: ?SourceLocation,
+        mclass: string,
+        body: AnyParseNode[],
+    |},
     "raisebox": {|
         type: "raisebox",
         mode: Mode,
@@ -441,6 +470,12 @@ type ParseNodeTypes = {
         loc?: ?SourceLocation,
         body: AnyParseNode,
     |},
+    "vcenter": {|
+        type: "vcenter",
+        mode: Mode,
+        loc?: ?SourceLocation,
+        body: AnyParseNode,
+    |},
     "xArrow": {|
         type: "xArrow",
         mode: Mode,
@@ -464,6 +499,7 @@ export function assertNodeType<NODETYPE: NodeType>(
             `Expected node of type ${type}, but got ` +
             (node ? `node of type ${node.type}` : String(node)));
     }
+    // $FlowFixMe, >=0.125
     return node;
 }
 

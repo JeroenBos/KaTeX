@@ -24,7 +24,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700,700i">
     <link rel="stylesheet" href="static/katex.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="static/index.css">
-    <link rel="stylesheet" href="static/copy-tex.min.css" crossorigin="anonymous">
 
     <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.1/dist/clipboard.min.js" integrity="sha256-hIvIxeqhGZF+VVeM55k0mJvWpQ6gTkWk3Emc+NmowYA=" crossorigin="anonymous"></script>
     <script defer src="static/katex.min.js" crossorigin="anonymous"></script>
@@ -62,9 +61,9 @@
             </a>
           </div>
           <textarea id="demo-input" spellcheck="false">
-% \f is defined as f(#1) using the macro
-\f{x} = \int_{-\infty}^\infty
-    \hat \f\xi\,e^{2 \pi i \xi x}
+% \f is defined as #1f(#2) using the macro
+\f\relax{x} = \int_{-\infty}^\infty
+    \f\hat\xi\,e^{2 \pi i \xi x}
     \,d\xi</textarea>
         </div>
         <div class="demo-right">
@@ -124,7 +123,7 @@
       <a class="ka-logo" href="https://www.khanacademy.org/"><img src="img/khan-academy-white.svg" alt="Khan Academy" width="172" height="28"></a>
       <span class="credits">
         Created by <a href="https://github.com/xymostech">Emily Eisenberg</a> and <a href="https://sophiebits.com/">Sophie Alpert</a>
-        <br><a href="https://github.com/KaTeX/KaTeX/blob/master/LICENSE">MIT License</a> · Built from the hard work of <a href="https://github.com/KaTeX/KaTeX/graphs/contributors">many contributors</a>
+        <br><a href="https://github.com/KaTeX/KaTeX/blob/main/LICENSE">MIT License</a> · Built from the hard work of <a href="https://github.com/KaTeX/KaTeX/graphs/contributors">many contributors</a>
         <br>Cross-browser testing via <a href="https://www.browserstack.com"><img src="/img/browserstack-logo.svg" alt="Browserstack"></a>
         <br>This site is powered by <a href="https://www.netlify.com">Netlify</a>
       </span>
@@ -164,6 +163,16 @@
           </td>
         </tr>
         <tr>
+          <td><label for="output">output</label></td>
+          <td>
+            <select id="output">
+              <option value="htmlAndMathml" selected>htmlAndMathml</option>
+              <option value="html">html</html>
+              <option value="mathml">mathml</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
           <td><label for="trust">trust</label></td>
           <td><input type="checkbox" id="trust"/></td>
         </tr>
@@ -171,7 +180,7 @@
       <h4><label for="macros">macros</label></h4>
       <textarea id="macros" placeholder="JSON">
 {
-    "\\f": "f(#1)"
+    "\\f": "#1f(#2)"
 }</textarea>
 
       <h3>Editor Options</h3>

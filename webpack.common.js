@@ -1,12 +1,15 @@
 // @flow
 const path = require('path');
+// $FlowIgnore
 const TerserPlugin = require('terser-webpack-plugin');
+// $FlowIgnore
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
 
 const {version} = require("./package.json");
 
+// $FlowIgnore
 const browserslist = require('browserslist')();
+// $FlowIgnore
 const caniuse = require('caniuse-lite');
 
 // from the least supported to the most supported
@@ -29,27 +32,6 @@ const targets /*: Array<Target> */ = [
         entry: './katex.webpack.js',
         library: 'katex',
     },
-    // {
-    //     name: 'contrib/auto-render',
-    //     entry: './contrib/auto-render/auto-render.js',
-    //     library: 'renderMathInElement',
-    // },
-    // {
-    //     name: 'contrib/mhchem',
-    //     entry: './contrib/mhchem/mhchem.js',
-    // },
-    // {
-    //     name: 'contrib/copy-tex',
-    //     entry: './contrib/copy-tex/copy-tex.webpack.js',
-    // },
-    // {
-    //     name: 'contrib/mathtex-script-type',
-    //     entry: './contrib/mathtex-script-type/mathtex-script-type.js',
-    // },
-    // {
-    //     name: 'contrib/render-a11y-string',
-    //     entry: './contrib/render-a11y-string/render-a11y-string.js',
-    // },
 ];
 
 /**
@@ -57,25 +39,27 @@ const targets /*: Array<Target> */ = [
  */
 function createConfig(target /*: Target */, dev /*: boolean */,
         minimize /*: boolean */) /*: Object */ {
-    const cssLoaders /*: Array<Object> */ = [{loader: 'css-loader'}];
+    const cssLoaders /*: Array<Object> */ = [{
+        loader: 'css-loader',
+        options: {importLoaders: 1},
+    }, {
+        loader: 'postcss-loader',
+        // $FlowIgnore
+        options: {postcssOptions: {plugins: [require('postcss-preset-env')()]}},
+    }];
     if (minimize) {
-        cssLoaders[0].options = {importLoaders: 1};
-        cssLoaders.push({
-            loader: 'postcss-loader',
-            options: {plugins: [require('cssnano')()]},
-        });
+        // $FlowIgnore
+        cssLoaders[1].options.postcssOptions.plugins.push(require('cssnano')());
     }
 
-    const lessOptions = {modifyVars: {
-        version: `"${version}"`,
-    }};
+    let sassVariables = `$version: "${version}";\n`;
 
     // use only necessary fonts, overridable by environment variables
     let isCovered = false;
     for (const font of fonts) {
         const override = process.env[`USE_${font.toUpperCase()}`];
         const useFont = override === "true" || override !== "false" && !isCovered;
-        lessOptions.modifyVars[`use-${font}`] = useFont;
+        sassVariables += (`$use-${font}: ${useFont.toString()};\n`);
 
         const support = caniuse.feature(caniuse.features[font]).stats;
         isCovered = isCovered || useFont && browserslist.every(browser => {
@@ -97,6 +81,7 @@ function createConfig(target /*: Target */, dev /*: boolean */,
             libraryExport: 'default',
             // Enable output modules to be used in browser or Node.
             // See: https://github.com/webpack/webpack/issues/6522
+            // https://github.com/webpack/webpack/pull/11987
             globalObject: "(typeof self !== 'undefined' ? self : this)",
             path: path.resolve(__dirname, 'dist'),
             publicPath: dev ? '/' : '',
@@ -116,35 +101,32 @@ function createConfig(target /*: Target */, dev /*: boolean */,
                     ],
                 },
                 {
-                    test: /\.less$/,
+                    test: /\.scss$/,
                     use: [
                         dev ? 'style-loader' : MiniCssExtractPlugin.loader,
                         ...cssLoaders,
                         {
-                            loader: 'less-loader',
-                            options: lessOptions,
+                            loader: 'sass-loader',
+                            options: {
+                                sassOptions: {
+                                    outputStyle: 'expanded',
+                                },
+                                additionalData: sassVariables,
+                            },
                         },
                     ],
                 },
                 {
                     test: /\.(ttf|woff|woff2)$/,
-                    use: [{
-                        loader: 'file-loader',
-                        options: {
-                            name: 'fonts/[name].[ext]',
-                        },
-                    }],
+                    type: 'asset/resource',
+                    generator: {
+                        filename: 'fonts/[name][ext][query]',
+                    },
                 },
             ],
         },
         externals: 'katex',
         plugins: [
-            new CopyPlugin([
-                {
-                    from: "./blatex.d.ts",
-                    to: "blatex.d.ts", // is relative to ./dist/
-                },
-            ]),
             !dev && new MiniCssExtractPlugin({
                 filename: minimize ? '[name].min.css' : '[name].css',
             }),
@@ -164,6 +146,9 @@ function createConfig(target /*: Target */, dev /*: boolean */,
         },
         performance: {
             hints: false,
+        },
+        stats: {
+            colors: true,
         },
     };
 }

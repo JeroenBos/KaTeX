@@ -1,6 +1,4 @@
-/* global expect: false */
-/* global it: false */
-/* global describe: false */
+import {strictSettings} from "./helpers";
 
 describe("Parser:", function() {
 
@@ -88,21 +86,26 @@ describe("Parser:", function() {
                 "Can't use function '\\sqrt' in text mode" +
                 " at position 7: \\text{\\̲s̲q̲r̲t̲2 is irrational…");
         });
-        it("rejects text-mode-only functions in math mode", function() {
-            expect`\'echec`.toFailWithParseError(
-                "Can't use function '\\'' in math mode" +
-                " at position 1: \\̲'̲echec");
+        it("rejects text-mode-only functions in math mode", () => {
+            expect`$`.toFailWithParseError(
+                "Can't use function '$' in math mode at position 1: $̲");
+        });
+        it("rejects strict-mode text-mode-only functions in math mode", () => {
+            expect`\'echec`.toFailWithParseError("LaTeX-incompatible input " +
+                "and strict mode is set to 'error': LaTeX's accent \\' works " +
+                "only in text mode [mathVsTextAccents]", strictSettings);
         });
     });
 
     describe("#parseArguments", function() {
         it("complains about missing argument at end of input", function() {
             expect`2\sqrt`.toFailWithParseError(
-                   "Expected group after '\\sqrt' at end of input: 2\\sqrt");
+                   "Expected group as argument to '\\sqrt'" +
+                   " at end of input: 2\\sqrt");
         });
         it("complains about missing argument at end of group", function() {
             expect`1^{2\sqrt}`.toFailWithParseError(
-                   "Expected group after '\\sqrt'" +
+                   "Expected group as argument to '\\sqrt'" +
                    " at position 10: 1^{2\\sqrt}̲");
         });
         it("complains about functions as arguments to others", function() {
@@ -170,7 +173,7 @@ describe("Parser.expect calls:", function() {
     describe("#parseSpecialGroup expecting braces", function() {
         it("complains about missing { for color", function() {
             expect`\textcolor#ffffff{text}`.toFailWithParseError(
-                   "Expected '{', got '#' at position 11:" +
+                   "Invalid color: '#' at position 11:" +
                    " \\textcolor#̲ffffff{text}");
         });
         it("complains about missing { for size", function() {
@@ -180,23 +183,23 @@ describe("Parser.expect calls:", function() {
         // Can't test for the [ of an optional group since it's optional
         it("complains about missing } for color", function() {
             expect`\textcolor{#ffffff{text}`.toFailWithParseError(
-                   "Invalid color: '#ffffff{text' at position 12:" +
-                   " \\textcolor{#̲f̲f̲f̲f̲f̲f̲{̲t̲e̲x̲t̲}");
+                   "Unexpected end of input in a macro argument," +
+                   " expected '}' at end of input: …r{#ffffff{text}");
         });
         it("complains about missing ] for size", function() {
             expect`\rule[1em{2em}{3em}`.toFailWithParseError(
-                   "Unexpected end of input in size" +
-                   " at position 7: \\rule[1̲e̲m̲{̲2̲e̲m̲}̲{̲3̲e̲m̲}̲");
+                   "Unexpected end of input in a macro argument," +
+                   " expected ']' at end of input: …e[1em{2em}{3em}");
         });
         it("complains about missing ] for size at end of input", function() {
             expect`\rule[1em`.toFailWithParseError(
-                   "Unexpected end of input in size" +
-                   " at position 7: \\rule[1̲e̲m̲");
+                   "Unexpected end of input in a macro argument," +
+                   " expected ']' at end of input: \\rule[1em");
         });
         it("complains about missing } for color at end of input", function() {
             expect`\textcolor{#123456`.toFailWithParseError(
-                   "Unexpected end of input in color" +
-                   " at position 12: \\textcolor{#̲1̲2̲3̲4̲5̲6̲");
+                   "Unexpected end of input in a macro argument," +
+                   " expected '}' at end of input: …xtcolor{#123456");
         });
     });
 
@@ -210,11 +213,13 @@ describe("Parser.expect calls:", function() {
     describe("#parseOptionalGroup expecting ]", function() {
         it("at end of file", function() {
             expect`\sqrt[3`.toFailWithParseError(
-                   "Expected ']', got 'EOF' at end of input: \\sqrt[3");
+                   "Unexpected end of input in a macro argument," +
+                   " expected ']' at end of input: \\sqrt[3");
         });
         it("before group", function() {
             expect`\sqrt[3{2}`.toFailWithParseError(
-                   "Expected ']', got 'EOF' at end of input: \\sqrt[3{2}");
+                   "Unexpected end of input in a macro argument," +
+                   " expected ']' at end of input: \\sqrt[3{2}");
         });
     });
 
@@ -273,7 +278,7 @@ describe("functions.js:", function() {
     describe("\\begin and \\end", function() {
         it("reject invalid environment names", function() {
             expect`\begin x\end y`.toFailWithParseError(
-                   "Invalid environment name at position 8: \\begin x̲\\end y");
+                   "No such environment: x at position 8: \\begin x̲\\end y");
         });
     });
 
@@ -297,22 +302,22 @@ describe("Lexer:", function() {
         it("reject 3-digit hex notation without #", function() {
             expect`\textcolor{1a2}{foo}`.toFailWithParseError(
                    "Invalid color: '1a2'" +
-                   " at position 12: \\textcolor{1̲a̲2̲}{foo}");
+                   " at position 11: \\textcolor{̲1̲a̲2̲}̲{foo}");
         });
     });
 
     describe("#_innerLexSize", function() {
         it("reject size without unit", function() {
             expect`\rule{0}{2em}`.toFailWithParseError(
-                   "Invalid size: '0' at position 7: \\rule{0̲}{2em}");
+                   "Invalid size: '0' at position 6: \\rule{̲0̲}̲{2em}");
         });
         it("reject size with bogus unit", function() {
             expect`\rule{1au}{2em}`.toFailWithParseError(
-                   "Invalid unit: 'au' at position 7: \\rule{1̲a̲u̲}{2em}");
+                   "Invalid unit: 'au' at position 6: \\rule{̲1̲a̲u̲}̲{2em}");
         });
         it("reject size without number", function() {
             expect`\rule{em}{2em}`.toFailWithParseError(
-                   "Invalid size: 'em' at position 7: \\rule{e̲m̲}{2em}");
+                   "Invalid size: 'em' at position 6: \\rule{̲e̲m̲}̲{2em}");
         });
     });
 

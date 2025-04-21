@@ -115,6 +115,16 @@ exports[`A begin/end parser should grab \\arraystretch 1`] = `
         }
       ]
     ],
+    "cols": [
+      {
+        "type": "align",
+        "align": "c"
+      },
+      {
+        "type": "align",
+        "align": "c"
+      }
+    ],
     "hLinesBeforeRow": [
       [
       ],
@@ -204,7 +214,7 @@ exports[`A font parser \\boldsymbol should inherit mbin/mrel from argument 1`] =
     "height": 0,
     "maxFontSize": 0,
     "style": {
-      "marginRight": "0.2777777777777778em"
+      "marginRight": "0.2778em"
     }
   },
   {
@@ -262,7 +272,7 @@ exports[`A font parser \\boldsymbol should inherit mbin/mrel from argument 1`] =
     "height": 0,
     "maxFontSize": 0,
     "style": {
-      "marginRight": "0.2777777777777778em"
+      "marginRight": "0.2778em"
     }
   },
   {
@@ -292,7 +302,7 @@ exports[`A font parser \\boldsymbol should inherit mbin/mrel from argument 1`] =
     "height": 0,
     "maxFontSize": 0,
     "style": {
-      "marginRight": "0.2222222222222222em"
+      "marginRight": "0.2222em"
     }
   },
   {
@@ -350,7 +360,7 @@ exports[`A font parser \\boldsymbol should inherit mbin/mrel from argument 1`] =
     "height": 0,
     "maxFontSize": 0,
     "style": {
-      "marginRight": "0.2222222222222222em"
+      "marginRight": "0.2222em"
     }
   },
   {
@@ -380,7 +390,7 @@ exports[`A font parser \\boldsymbol should inherit mbin/mrel from argument 1`] =
     "height": 0,
     "maxFontSize": 0,
     "style": {
-      "marginRight": "0.2222222222222222em"
+      "marginRight": "0.2222em"
     }
   },
   {
@@ -403,22 +413,7 @@ exports[`A font parser \\boldsymbol should inherit mbin/mrel from argument 1`] =
             "skew": 0,
             "style": {
             },
-            "text": "+",
-            "width": 0.89444
-          },
-          {
-            "classes": [
-              "mord",
-              "mathbf"
-            ],
-            "depth": 0.13333,
-            "height": 0.63333,
-            "italic": 0,
-            "maxFontSize": 1,
-            "skew": 0,
-            "style": {
-            },
-            "text": "+",
+            "text": "++",
             "width": 0.89444
           }
         ],
@@ -453,7 +448,7 @@ exports[`A font parser \\boldsymbol should inherit mbin/mrel from argument 1`] =
     "height": 0,
     "maxFontSize": 0,
     "style": {
-      "marginRight": "0.2222222222222222em"
+      "marginRight": "0.2222em"
     }
   },
   {
@@ -484,45 +479,15 @@ exports[`A font parser \\boldsymbol should inherit mbin/mrel from argument 1`] =
               "mord",
               "boldsymbol"
             ],
-            "depth": 0,
-            "height": 0.44444,
-            "italic": 0,
-            "maxFontSize": 1,
-            "skew": 0,
-            "style": {
-            },
-            "text": "x",
-            "width": 0.65903
-          },
-          {
-            "classes": [
-              "mord",
-              "boldsymbol"
-            ],
             "depth": 0.19444,
-            "height": 0.44444,
-            "italic": 0.03704,
-            "maxFontSize": 1,
-            "skew": 0,
-            "style": {
-            },
-            "text": "y",
-            "width": 0.59028
-          },
-          {
-            "classes": [
-              "mord",
-              "boldsymbol"
-            ],
-            "depth": 0,
             "height": 0.44444,
             "italic": 0.04213,
             "maxFontSize": 1,
             "skew": 0,
             "style": {
             },
-            "text": "z",
-            "width": 0.55509
+            "text": "xyz",
+            "width": 0.65903
           }
         ],
         "classes": [
@@ -650,14 +615,12 @@ exports[`A parser that does not throw on unsupported commands should build katex
 `;
 
 exports[`A parser that does not throw on unsupported commands should properly escape LaTeX in errors 1`] = `
-
 <span class="katex-error"
       title="ParseError: KaTeX parse error: Expected group after &#x27;^&#x27; at position 2: 2^̲&amp;&quot;&lt;&gt;"
       style="color:#933"
 >
   2^&amp;&quot;&lt;&gt;
 </span>
-
 `;
 
 exports[`An HTML extension builder should not affect spacing 1`] = `
@@ -694,7 +657,7 @@ exports[`An HTML extension builder should not affect spacing 1`] = `
         "height": 0,
         "maxFontSize": 0,
         "style": {
-          "marginRight": "0.2222222222222222em"
+          "marginRight": "0.2222em"
         }
       },
       {
@@ -723,7 +686,7 @@ exports[`An HTML extension builder should not affect spacing 1`] = `
         "height": 0,
         "maxFontSize": 0,
         "style": {
-          "marginRight": "0.2222222222222222em"
+          "marginRight": "0.2222em"
         }
       }
     ],
@@ -1093,7 +1056,6 @@ exports[`An includegraphics builder should render with trust setting 1`] = `
 `;
 
 exports[`Extending katex by new fonts and symbols Add new font class to new extended symbols 1`] = `
-
 <span class="katex">
   <span class="katex-mathml">
     <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -1127,7 +1089,7 @@ exports[`Extending katex by new fonts and symbols Add new font class to new exte
   >
     <span class="base">
       <span class="strut"
-            style="height:0.84425em;vertical-align:0em;"
+            style="height:0.8442em;"
       >
       </span>
       <span class="mord mockEasternArabicFont-Regular">
@@ -1141,7 +1103,7 @@ exports[`Extending katex by new fonts and symbols Add new font class to new exte
           <span class="vlist-t">
             <span class="vlist-r">
               <span class="vlist"
-                    style="height:0.84425em;"
+                    style="height:0.8442em;"
               >
                 <span style="top:-3.063em;margin-right:0.05em;">
                   <span class="pstrut"
@@ -1151,10 +1113,7 @@ exports[`Extending katex by new fonts and symbols Add new font class to new exte
                   <span class="sizing reset-size6 size3 mtight">
                     <span class="mord mtight">
                       <span class="mord mockEasternArabicFont-Regular mtight">
-                        ۱
-                      </span>
-                      <span class="mord mockEasternArabicFont-Regular mtight">
-                        ۱
+                        ۱۱
                       </span>
                     </span>
                   </span>
@@ -1167,11 +1126,9 @@ exports[`Extending katex by new fonts and symbols Add new font class to new exte
     </span>
   </span>
 </span>
-
 `;
 
 exports[`Newlines via \\\\ and \\newline \\\\ causes newline, even after mrel and mop 1`] = `
-
 <span class="katex">
   <span class="katex-mathml">
     <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -1213,7 +1170,7 @@ exports[`Newlines via \\\\ and \\newline \\\\ causes newline, even after mrel an
   >
     <span class="base">
       <span class="strut"
-            style="height:0.68333em;vertical-align:0em;"
+            style="height:0.6833em;"
       >
       </span>
       <span class="mord mathnormal"
@@ -1222,7 +1179,7 @@ exports[`Newlines via \\\\ and \\newline \\\\ causes newline, even after mrel an
         M
       </span>
       <span class="mspace"
-            style="margin-right:0.2777777777777778em;"
+            style="margin-right:0.2778em;"
       >
       </span>
       <span class="mrel">
@@ -1233,14 +1190,14 @@ exports[`Newlines via \\\\ and \\newline \\\\ causes newline, even after mrel an
     </span>
     <span class="base">
       <span class="strut"
-            style="height:0.66666em;vertical-align:-0.08333em;"
+            style="height:0.6667em;vertical-align:-0.0833em;"
       >
       </span>
       <span class="mord mathnormal">
         a
       </span>
       <span class="mspace"
-            style="margin-right:0.2222222222222222em;"
+            style="margin-right:0.2222em;"
       >
       </span>
       <span class="mbin">
@@ -1251,7 +1208,7 @@ exports[`Newlines via \\\\ and \\newline \\\\ causes newline, even after mrel an
     </span>
     <span class="base">
       <span class="strut"
-            style="height:0.69444em;vertical-align:0em;"
+            style="height:0.6944em;"
       >
       </span>
       <span class="mord mathnormal">
@@ -1262,7 +1219,7 @@ exports[`Newlines via \\\\ and \\newline \\\\ causes newline, even after mrel an
     </span>
     <span class="base">
       <span class="strut"
-            style="height:0.43056em;vertical-align:0em;"
+            style="height:0.4306em;"
       >
       </span>
       <span class="mord mathnormal">
@@ -1271,7 +1228,6 @@ exports[`Newlines via \\\\ and \\newline \\\\ causes newline, even after mrel an
     </span>
   </span>
 </span>
-
 `;
 
 exports[`href and url commands should allow all protocols when trust option is true 1`] = `
@@ -1448,7 +1404,7 @@ exports[`href and url commands should not affect spacing around 1`] = `
     "height": 0,
     "maxFontSize": 0,
     "style": {
-      "marginRight": "0.2222222222222222em"
+      "marginRight": "0.2222em"
     }
   },
   {
@@ -1482,7 +1438,7 @@ exports[`href and url commands should not affect spacing around 1`] = `
         "height": 0,
         "maxFontSize": 0,
         "style": {
-          "marginRight": "0.2222222222222222em"
+          "marginRight": "0.2222em"
         }
       },
       {
@@ -1512,7 +1468,50 @@ exports[`href and url commands should not affect spacing around 1`] = `
 ]
 `;
 
-exports[`href and url commands should not allow explicitly disallow protocols 1`] = `
+exports[`href and url commands should not allow explicitly disallowed protocols 1`] = `
+[
+  {
+    "type": "color",
+    "body": [
+      {
+        "type": "text",
+        "body": [
+          {
+            "type": "textord",
+            "mode": "text",
+            "text": "\\\\"
+          },
+          {
+            "type": "textord",
+            "mode": "text",
+            "text": "h"
+          },
+          {
+            "type": "textord",
+            "mode": "text",
+            "text": "r"
+          },
+          {
+            "type": "textord",
+            "mode": "text",
+            "text": "e"
+          },
+          {
+            "type": "textord",
+            "mode": "text",
+            "text": "f"
+          }
+        ],
+        "mode": "math"
+      }
+    ],
+    "color": "#cc0000",
+    "mode": "math"
+  }
+]
+`;
+
+exports[`href and url commands should not allow explicitly uppercased disallowed protocols 1`] = `
 [
   {
     "type": "color",
