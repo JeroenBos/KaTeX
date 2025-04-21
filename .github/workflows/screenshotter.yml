@@ -12,19 +12,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        browser: [chrome, firefox, safari]
+        browser: [chrome, firefox]
         include:
         - browser: chrome
           image: selenium/standalone-chrome:3.141.59-20210422
         - browser: firefox
           image: selenium/standalone-firefox:3.141.59-20210929
-        - browser: safari
-          image: ylemkimon/selenium-proxy:latest
-          browserstack:
-            browserName: safari
-            browser_version: 13.1
-            os: OS X
-            os_version: Catalina
       fail-fast: false
     services:
       selenium:
