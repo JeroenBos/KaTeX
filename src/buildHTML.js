@@ -262,17 +262,13 @@ export const buildGroup = function(
     }
 
     if (groupBuilders[group.type]) {
-        // Call the groupBuilders function
-        // $FlowFixMe
         let groupNode: HtmlDomNode = groupBuilders[group.type](group, options);
 
         const location = group.loc;
         if (location) {
-            if (!groupNode.attributes) {
-                groupNode.attributes = {};
-            }
-            // $FlowFixMe
-            groupNode.attributes["data-loc"] = location.start + "," + location.end;
+            // $FlowFixMe[prop-missing]
+            (groupNode.attributes: { [string]: any })["data-loc"]
+                = location.start + "," + location.end;
         }
 
         // If the size changed between the parent and the current group, account
