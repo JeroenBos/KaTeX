@@ -163,27 +163,6 @@ export default function defineFunction<NODETYPE: NodeType>({
     mathmlBuilder,
 }: FunctionDefSpec<NODETYPE>) {
 
-    const sourceLocationHandlerWrapper: ?FunctionHandler<NODETYPE> =
-    handler == null ? null : (
-        context: FunctionContext,
-        args: AnyParseNode[],
-        optArgs: (?AnyParseNode)[],
-    ) => {
-        const originalResult = handler.call(this, context, args, optArgs);
-
-        // $FlowFixMe
-        const result: ParseNode<NODETYPE> = originalResult;
-
-        if (result.loc === undefined) {
-            if (context.token === undefined || !context.token.loc) {
-                throw new Error('both loc sources are undefined');
-            }
-            result.loc = context.token.loc;
-        }
-
-        return result;
-    };
-
     // Set default values of functions
     const data = {
         type,

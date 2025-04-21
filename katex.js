@@ -23,13 +23,11 @@ import {
     LineNode,
 } from "./src/domTree";
 
-import type {DomSpan} from "./src/domTree";
 import type {SettingsOptions} from "./src/Settings";
 import type {AnyParseNode} from "./src/parseNode";
 import type {DomSpan} from "./src/domTree";
 
 import {defineSymbol} from './src/symbols';
-import defineFunction from './src/defineFunction';
 import defineMacro from './src/defineMacro';
 import {setFontMetrics} from './src/fontMetrics';
 
@@ -177,6 +175,18 @@ const renderTreeToString = function(
     return parseToDomTree(tree, expression, options).toMarkup();
 };
 
+const version = __VERSION__;
+
+const __domTree = {
+    Span,
+    Anchor,
+    SymbolNode,
+    SvgNode,
+    PathNode,
+    LineNode,
+};
+
+
 export default {
     /**
      * Current KaTeX version
@@ -247,8 +257,7 @@ export default {
      */
     __defineMacro: defineMacro,
 
-    utils: utils,
-    __defineFunction: defineFunction,
+    utils,
     __makeSpan: buildCommon.makeSpan,
     MathNode: mathMLTree.MathNode,
     __parseToDomTree: parseToDomTree,
