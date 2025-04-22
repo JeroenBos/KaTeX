@@ -354,7 +354,8 @@ async function setSize(width, height) {
         return;
     }
     if (++attempts > opts.attempts + 10) {
-        throw new Error(`Failed to set window size correctly. target=${targetW}×${targetH}, actual=${actualW}×${actualH}`);
+        throw new Error('Failed to set window size correctly.'
+             + ` target=${targetW}×${targetH}, actual=${actualW}×${actualH}`);
     }
     return setSize(targetW + width - actualW, targetH + height - actualH);
 }
@@ -429,7 +430,7 @@ async function findHostIP() {
 }
 
 //////////////////////////////////////////////////////////////////////
-console.log('///////////////Take the screenshots///////////////')
+console.log('///////////////Take the screenshots///////////////');
 
 let exitStatus = 0;
 const listOfFailed = [];
