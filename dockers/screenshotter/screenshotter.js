@@ -341,7 +341,7 @@ async function setupDriver() {
 //////////////////////////////////////////////////////////////////////
 // Set the screen size
 
-const targetW = 1024;
+const targetW = 1023;
 const targetH = 768;
 let attempts = 0;
 async function setSize(width, height) {
@@ -353,8 +353,8 @@ async function setSize(width, height) {
     if (actualW === targetW && actualH === targetH) {
         return;
     }
-    if (++attempts > opts.attempts) {
-        throw new Error("Failed to set window size correctly.");
+    if (++attempts > opts.attempts + 10) {
+        throw new Error(`Failed to set window size correctly. target=${targetW}×${targetH}, actual=${actualW}×${actualH}`);
     }
     return setSize(targetW + width - actualW, targetH + height - actualH);
 }
