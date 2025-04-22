@@ -429,7 +429,7 @@ async function findHostIP() {
 }
 
 //////////////////////////////////////////////////////////////////////
-// Take the screenshots
+console.log('///////////////Take the screenshots///////////////')
 
 let exitStatus = 0;
 const listOfFailed = [];
