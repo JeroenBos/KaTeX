@@ -1879,8 +1879,7 @@ describe("An HTML font tree-builder", function() {
 
     it("should render a combination of font and color changes", function() {
         let markup = katex.renderToString(r`\textcolor{blue}{\mathbb R}`);
-        let span = "<span class=\"mord mathbb\" style=\"color:blue;\">R</span>";
-        expect(markup).toContain(span);
+        expect(markup).toContain(/<span class="mord mathbb" style="color:blue;"[^>]*>R</span>/);
 
         markup = katex.renderToString(r`\mathbb{\textcolor{blue}{R}}`);
         span = "<span class=\"mord mathbb\" style=\"color:blue;\">R</span>";
@@ -1889,7 +1888,7 @@ describe("An HTML font tree-builder", function() {
 
     it("should render wide characters with mord and with the correct font", function() {
         const markup = katex.renderToString(String.fromCharCode(0xD835, 0xDC00));
-        expect(markup).toContain("<span class=\"mord mathbf\">A</span>");
+        expect(markup).toMatch(/<span class="mord mathbf"[^>]*>A<\/span>/)
 
         expect(String.fromCharCode(0xD835, 0xDC00) +
                 " = " + String.fromCharCode(0xD835, 0xDC1A))

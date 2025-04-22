@@ -113,6 +113,9 @@ export const stripPositions = expr => {
     if (expr.loc && expr.loc.lexer && typeof expr.loc.start === "number") {
         delete expr.loc;
     }
+    if (expr['data-loc']) {
+        delete expr['data-loc'];
+    }
     Object.keys(expr).forEach(function(key) {
         stripPositions(expr[key]);
     });
