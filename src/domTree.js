@@ -441,26 +441,19 @@ export class SymbolNode implements HtmlDomNode {
 
         // region: my code
         span = span || document.createElement("span");
-        // $FlowFixMe
+        // $FlowFixMe[prop-missing]
         const attributes = this.attributes;
         if (attributes) {
             // Apply attributes
             for (const attr in attributes) {
                 if (attributes.hasOwnProperty(attr)) {
-                    // $FlowFixMe
-                    node.setAttribute(attr, attributes[attr]);
+                    span.setAttribute(attr, attributes[attr]);
                 }
             }
         }
+        span.appendChild(node);
+        return span;
         // endregion: my code
-
-
-        if (span) {
-            span.appendChild(node);
-            return span;
-        } else {
-            return node;
-        }
     }
 
     /**

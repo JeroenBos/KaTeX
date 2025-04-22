@@ -24,8 +24,7 @@ defineFunction({
         const argNode = assertNodeType(args[0], "raw");
         const value = argNode.string.trim();
         const funcNameTokenLoc = assertLocationSpecified(token.loc);
-        const argLoc = assertLocationSpecified(argNode.loc);
-        const funcCallLoc = SourceLocation.merge(funcNameTokenLoc, argLoc);
+        const funcCallLoc = SourceLocation.merge(funcNameTokenLoc, argNode.loc);
         const result: ParseNode<"blatex"> = {
             type: "blatex",
             mode: parser.mode,

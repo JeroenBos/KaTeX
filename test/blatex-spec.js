@@ -32,10 +32,10 @@ describe("\\blatex{}", function() {
                 </span>
                 <span class="katex-html" aria-hidden="true">
                     <span class="base">
-                        <span class="strut" style="height:0em;vertical-align:0em;">
+                        <span class="strut" style="height:0em;">
                         </span>
-                        <span data-loc="0,8">
-                            <span data-blatex="" data-loc="0,8">
+                        <span data-loc="0,7">
+                            <span data-blatex="" data-loc="0,7">
                             </span>
                         </span>
                     </span>
