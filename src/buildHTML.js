@@ -266,6 +266,10 @@ export const buildGroup = function(
 
         const location = group.loc;
         if (location) {
+            if (!('attributes' in groupNode)) {
+                // $FlowFixMe[prop-missing]
+                groupNode['attributes'] = {};
+            }
             // $FlowFixMe[prop-missing]
             (groupNode.attributes: { [string]: any })["data-loc"]
                 = location.start + "," + location.end;
