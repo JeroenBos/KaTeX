@@ -145,6 +145,9 @@ exports[`A begin/end parser should grab \\arraystretch 1`] = `
 exports[`A font parser \\boldsymbol should inherit mbin/mrel from argument 1`] = `
 [
   {
+    "attributes": {
+      "data-loc": "0,1"
+    },
     "classes": [
       "mord",
       "mathnormal"
@@ -165,6 +168,7 @@ exports[`A font parser \\boldsymbol should inherit mbin/mrel from argument 1`] =
     "children": [
       {
         "attributes": {
+          "data-loc": "12,14"
         },
         "children": [
         ],
@@ -188,6 +192,9 @@ exports[`A font parser \\boldsymbol should inherit mbin/mrel from argument 1`] =
     }
   },
   {
+    "attributes": {
+      "data-loc": "14,15"
+    },
     "classes": [
       "mord",
       "mathnormal"
@@ -223,9 +230,13 @@ exports[`A font parser \\boldsymbol should inherit mbin/mrel from argument 1`] =
     "children": [
       {
         "attributes": {
+          "data-loc": "26,29"
         },
         "children": [
           {
+            "attributes": {
+              "data-loc": "27,28"
+            },
             "classes": [
               "mrel",
               "mathbf"
@@ -276,6 +287,9 @@ exports[`A font parser \\boldsymbol should inherit mbin/mrel from argument 1`] =
     }
   },
   {
+    "attributes": {
+      "data-loc": "29,30"
+    },
     "classes": [
       "mord",
       "mathnormal"
@@ -311,9 +325,13 @@ exports[`A font parser \\boldsymbol should inherit mbin/mrel from argument 1`] =
     "children": [
       {
         "attributes": {
+          "data-loc": "41,44"
         },
         "children": [
           {
+            "attributes": {
+              "data-loc": "42,43"
+            },
             "classes": [
               "mord",
               "mathbf"
@@ -364,6 +382,9 @@ exports[`A font parser \\boldsymbol should inherit mbin/mrel from argument 1`] =
     }
   },
   {
+    "attributes": {
+      "data-loc": "44,45"
+    },
     "classes": [
       "mord",
       "mathnormal"
@@ -399,9 +420,13 @@ exports[`A font parser \\boldsymbol should inherit mbin/mrel from argument 1`] =
     "children": [
       {
         "attributes": {
+          "data-loc": "56,60"
         },
         "children": [
           {
+            "attributes": {
+              "data-loc": "57,58"
+            },
             "classes": [
               "mord",
               "mathbf"
@@ -452,6 +477,9 @@ exports[`A font parser \\boldsymbol should inherit mbin/mrel from argument 1`] =
     }
   },
   {
+    "attributes": {
+      "data-loc": "60,61"
+    },
     "classes": [
       "mord",
       "mathnormal"
@@ -472,9 +500,13 @@ exports[`A font parser \\boldsymbol should inherit mbin/mrel from argument 1`] =
     "children": [
       {
         "attributes": {
+          "data-loc": "72,77"
         },
         "children": [
           {
+            "attributes": {
+              "data-loc": "73,74"
+            },
             "classes": [
               "mord",
               "boldsymbol"
@@ -510,6 +542,9 @@ exports[`A font parser \\boldsymbol should inherit mbin/mrel from argument 1`] =
     }
   },
   {
+    "attributes": {
+      "data-loc": "77,78"
+    },
     "classes": [
       "mord",
       "mathnormal"
@@ -631,6 +666,9 @@ exports[`An HTML extension builder should not affect spacing 1`] = `
     },
     "children": [
       {
+        "attributes": {
+          "data-loc": "11,12"
+        },
         "classes": [
           "mord",
           "mathnormal"
@@ -661,6 +699,9 @@ exports[`An HTML extension builder should not affect spacing 1`] = `
         }
       },
       {
+        "attributes": {
+          "data-loc": "12,13"
+        },
         "classes": [
           "mbin"
         ],
@@ -700,6 +741,9 @@ exports[`An HTML extension builder should not affect spacing 1`] = `
     }
   },
   {
+    "attributes": {
+      "data-loc": "14,15"
+    },
     "classes": [
       "mord",
       "mathnormal"
@@ -725,6 +769,9 @@ exports[`An HTML extension builder should render with trust and strict setting 1
     },
     "children": [
       {
+        "attributes": {
+          "data-loc": "13,14"
+        },
         "classes": [
           "mord",
           "mathnormal"
@@ -754,6 +801,9 @@ exports[`An HTML extension builder should render with trust and strict setting 1
     },
     "children": [
       {
+        "attributes": {
+          "data-loc": "31,32"
+        },
         "classes": [
           "mord",
           "mathnormal"
@@ -785,6 +835,9 @@ exports[`An HTML extension builder should render with trust and strict setting 1
     },
     "children": [
       {
+        "attributes": {
+          "data-loc": "57,58"
+        },
         "classes": [
           "mord",
           "mathnormal"
@@ -816,6 +869,9 @@ exports[`An HTML extension builder should render with trust and strict setting 1
     },
     "children": [
       {
+        "attributes": {
+          "data-loc": "83,84"
+        },
         "classes": [
           "mord",
           "mathnormal"
@@ -1092,11 +1148,15 @@ exports[`Extending katex by new fonts and symbols Add new font class to new exte
             style="height:0.8442em;"
       >
       </span>
-      <span class="mord mockEasternArabicFont-Regular">
+      <span class="mord mockEasternArabicFont-Regular"
+            data-loc="0,1"
+      >
         ۹
       </span>
       <span class="mord">
-        <span class="mord mockEasternArabicFont-Regular">
+        <span class="mord mockEasternArabicFont-Regular"
+              data-loc="1,2"
+        >
           ۹
         </span>
         <span class="msupsub">
@@ -1111,8 +1171,12 @@ exports[`Extending katex by new fonts and symbols Add new font class to new exte
                   >
                   </span>
                   <span class="sizing reset-size6 size3 mtight">
-                    <span class="mord mtight">
-                      <span class="mord mockEasternArabicFont-Regular mtight">
+                    <span class="mord mtight"
+                          data-loc="3,7"
+                    >
+                      <span class="mord mockEasternArabicFont-Regular mtight"
+                            data-loc="4,5"
+                      >
                         ۱۱
                       </span>
                     </span>
@@ -1175,6 +1239,7 @@ exports[`Newlines via \\\\ and \\newline \\\\ causes newline, even after mrel an
       </span>
       <span class="mord mathnormal"
             style="margin-right:0.10903em;"
+            data-loc="0,1"
       >
         M
       </span>
@@ -1182,7 +1247,9 @@ exports[`Newlines via \\\\ and \\newline \\\\ causes newline, even after mrel an
             style="margin-right:0.2778em;"
       >
       </span>
-      <span class="mrel">
+      <span class="mrel"
+            data-loc="2,3"
+      >
         =
       </span>
     </span>
@@ -1193,14 +1260,18 @@ exports[`Newlines via \\\\ and \\newline \\\\ causes newline, even after mrel an
             style="height:0.6667em;vertical-align:-0.0833em;"
       >
       </span>
-      <span class="mord mathnormal">
+      <span class="mord mathnormal"
+            data-loc="7,8"
+      >
         a
       </span>
       <span class="mspace"
             style="margin-right:0.2222em;"
       >
       </span>
-      <span class="mbin">
+      <span class="mbin"
+            data-loc="9,10"
+      >
         +
       </span>
     </span>
@@ -1211,7 +1282,9 @@ exports[`Newlines via \\\\ and \\newline \\\\ causes newline, even after mrel an
             style="height:0.6944em;"
       >
       </span>
-      <span class="mord mathnormal">
+      <span class="mord mathnormal"
+            data-loc="14,15"
+      >
         b
       </span>
     </span>
@@ -1222,7 +1295,9 @@ exports[`Newlines via \\\\ and \\newline \\\\ causes newline, even after mrel an
             style="height:0.4306em;"
       >
       </span>
-      <span class="mord mathnormal">
+      <span class="mord mathnormal"
+            data-loc="19,20"
+      >
         c
       </span>
     </span>
@@ -1378,6 +1453,9 @@ exports[`href and url commands should forbid relative URLs when trust option is 
 exports[`href and url commands should not affect spacing around 1`] = `
 [
   {
+    "attributes": {
+      "data-loc": "0,1"
+    },
     "classes": [
       "mord",
       "mathnormal"
@@ -1413,6 +1491,9 @@ exports[`href and url commands should not affect spacing around 1`] = `
     },
     "children": [
       {
+        "attributes": {
+          "data-loc": "28,29"
+        },
         "classes": [
           "mbin"
         ],
@@ -1442,6 +1523,9 @@ exports[`href and url commands should not affect spacing around 1`] = `
         }
       },
       {
+        "attributes": {
+          "data-loc": "29,30"
+        },
         "classes": [
           "mord",
           "mathnormal"

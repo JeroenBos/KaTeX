@@ -1787,109 +1787,109 @@ describe("A comment parser", function() {
 describe("An HTML font tree-builder", function() {
     it("should render \\mathbb{R} with the correct font", function() {
         const markup = katex.renderToString(r`\mathbb{R}`);
-        expect(markup).toContain("<span class=\"mord mathbb\">R</span>");
+        expect(markup).toContain("<span class=\"mord mathbb\" data-loc=\"8,9\">R</span>");
     });
 
     it("should render \\mathrm{R} with the correct font", function() {
         const markup = katex.renderToString(r`\mathrm{R}`);
-        expect(markup).toContain("<span class=\"mord mathrm\">R</span>");
+        expect(markup).toContain("<span class=\"mord mathrm\" data-loc=\"8,9\">R</span>");
     });
 
     it("should render \\mathcal{R} with the correct font", function() {
         const markup = katex.renderToString(r`\mathcal{R}`);
-        expect(markup).toContain("<span class=\"mord mathcal\">R</span>");
+        expect(markup).toContain("<span class=\"mord mathcal\" data-loc=\"9,10\">R</span>");
     });
 
     it("should render \\mathfrak{R} with the correct font", function() {
         const markup = katex.renderToString(r`\mathfrak{R}`);
-        expect(markup).toContain("<span class=\"mord mathfrak\">R</span>");
+        expect(markup).toContain("<span class=\"mord mathfrak\" data-loc=\"10,11\">R</span>");
     });
 
     it("should render \\text{R} with the correct font", function() {
         const markup = katex.renderToString(r`\text{R}`);
-        expect(markup).toContain("<span class=\"mord\">R</span>");
+        expect(markup).toContain("<span class=\"mord\" data-loc=\"6,7\">R</span>");
     });
 
     it("should render \\textit{R} with the correct font", function() {
         const markup = katex.renderToString(r`\textit{R}`);
-        expect(markup).toContain("<span class=\"mord textit\">R</span>");
+        expect(markup).toContain("<span class=\"mord textit\" data-loc=\"8,9\">R</span>");
     });
 
     it("should render \\text{\\textit{R}} with the correct font", function() {
         const markup = katex.renderToString(r`\text{\textit{R}}`);
-        expect(markup).toContain("<span class=\"mord textit\">R</span>");
+        expect(markup).toContain("<span class=\"mord textit\" data-loc=\"14,15\">R</span>");
     });
 
     it("should render \\textup{R} with the correct font", function() {
         const markup1 = katex.renderToString(r`\textup{R}`);
-        expect(markup1).toContain("<span class=\"mord textup\">R</span>");
+        expect(markup1).toContain("<span class=\"mord textup\" data-loc=\"8,9\">R</span>");
         const markup2 = katex.renderToString(r`\textit{\textup{R}}`);
-        expect(markup2).toContain("<span class=\"mord textup\">R</span>");
+        expect(markup2).toContain("<span class=\"mord textup\" data-loc=\"16,17\">R</span>");
         const markup3 = katex.renderToString(r`\textup{\textit{R}}`);
-        expect(markup3).toContain("<span class=\"mord textit\">R</span>");
+        expect(markup3).toContain("<span class=\"mord textit\" data-loc=\"16,17\">R</span>");
     });
 
     it("should render \\text{R\\textit{S}T} with the correct fonts", function() {
         const markup = katex.renderToString(r`\text{R\textit{S}T}`);
-        expect(markup).toContain("<span class=\"mord\">R</span>");
-        expect(markup).toContain("<span class=\"mord textit\">S</span>");
-        expect(markup).toContain("<span class=\"mord\">T</span>");
+        expect(markup).toContain("<span class=\"mord\" data-loc=\"6,7\">R</span>");
+        expect(markup).toContain("<span class=\"mord textit\" data-loc=\"15,16\">S</span>");
+        expect(markup).toContain("<span class=\"mord\" data-loc=\"17,18\">T</span>");
     });
 
     it("should render \\textbf{R } with the correct font", function() {
         const markup = katex.renderToString(r`\textbf{R }`);
-        expect(markup).toContain("<span class=\"mord textbf\">R\u00a0</span>");
+        expect(markup).toContain("<span class=\"mord textbf\" data-loc=\"8,9\">R\u00a0</span>");
     });
 
     it("should render \\textmd{R} with the correct font", function() {
         const markup1 = katex.renderToString(r`\textmd{R}`);
-        expect(markup1).toContain("<span class=\"mord textmd\">R</span>");
+        expect(markup1).toContain("<span class=\"mord textmd\" data-loc=\"8,9\">R</span>");
         const markup2 = katex.renderToString(r`\textbf{\textmd{R}}`);
-        expect(markup2).toContain("<span class=\"mord textmd\">R</span>");
+        expect(markup2).toContain("<span class=\"mord textmd\" data-loc=\"16,17\">R</span>");
         const markup3 = katex.renderToString(r`\textmd{\textbf{R}}`);
-        expect(markup3).toContain("<span class=\"mord textbf\">R</span>");
+        expect(markup3).toContain("<span class=\"mord textbf\" data-loc=\"16,17\">R</span>");
     });
 
     it("should render \\textsf{R} with the correct font", function() {
         const markup = katex.renderToString(r`\textsf{R}`);
-        expect(markup).toContain("<span class=\"mord textsf\">R</span>");
+        expect(markup).toContain("<span class=\"mord textsf\" data-loc=\"8,9\">R</span>");
     });
 
     it("should render \\textsf{\\textit{R}G\\textbf{B}} with the correct font", function() {
         const markup = katex.renderToString(r`\textsf{\textit{R}G\textbf{B}}`);
-        expect(markup).toContain("<span class=\"mord textsf textit\">R</span>");
-        expect(markup).toContain("<span class=\"mord textsf\">G</span>");
-        expect(markup).toContain("<span class=\"mord textsf textbf\">B</span>");
+        expect(markup).toContain("<span class=\"mord textsf textit\" data-loc=\"16,17\">R</span>");
+        expect(markup).toContain("<span class=\"mord textsf\" data-loc=\"18,19\">G</span>");
+        expect(markup).toContain("<span class=\"mord textsf textbf\" data-loc=\"27,28\">B</span>");
     });
 
     it("should render \\textsf{\\textbf{$\\mathrm{A}$}} with the correct font", function() {
         const markup = katex.renderToString(r`\textsf{\textbf{$\mathrm{A}$}}`);
-        expect(markup).toContain("<span class=\"mord mathrm\">A</span>");
+        expect(markup).toContain("<span class=\"mord mathrm\" data-loc=\"25,26\">A</span>");
     });
 
     it("should render \\textsf{\\textbf{$\\mathrm{\\textsf{A}}$}} with the correct font", function() {
         const markup = katex.renderToString(r`\textsf{\textbf{$\mathrm{\textsf{A}}$}}`);
-        expect(markup).toContain("<span class=\"mord textsf textbf\">A</span>");
+        expect(markup).toContain("<span class=\"mord textsf textbf\" data-loc=\"33,34\">A</span>");
     });
 
     it("should render \\texttt{R} with the correct font", function() {
         const markup = katex.renderToString(r`\texttt{R}`);
-        expect(markup).toContain("<span class=\"mord texttt\">R</span>");
+        expect(markup).toContain("<span class=\"mord texttt\" data-loc=\"8,9\">R</span>");
     });
 
     it("should render a combination of font and color changes", function() {
         let markup = katex.renderToString(r`\textcolor{blue}{\mathbb R}`);
-        let span = "<span class=\"mord mathbb\" style=\"color:blue;\">R</span>";
+        let span = "<span class=\"mord mathbb\" style=\"color:blue;\" data-loc=\"25,26\">R</span>";
         expect(markup).toContain(span);
 
         markup = katex.renderToString(r`\mathbb{\textcolor{blue}{R}}`);
-        span = "<span class=\"mord mathbb\" style=\"color:blue;\">R</span>";
+        span = "<span class=\"mord mathbb\" style=\"color:blue;\" data-loc=\"25,26\">R</span>";
         expect(markup).toContain(span);
     });
 
     it("should render wide characters with mord and with the correct font", function() {
         const markup = katex.renderToString(String.fromCharCode(0xD835, 0xDC00));
-        expect(markup).toContain("<span class=\"mord mathbf\">A</span>");
+        expect(markup).toMatch(/<span class="mord mathbf"[^>]*>A<\/span>/);
 
         expect(String.fromCharCode(0xD835, 0xDC00) +
                 " = " + String.fromCharCode(0xD835, 0xDC1A))

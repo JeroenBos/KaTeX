@@ -439,12 +439,21 @@ export class SymbolNode implements HtmlDomNode {
             }
         }
 
-        if (span) {
-            span.appendChild(node);
-            return span;
-        } else {
-            return node;
+        // region: my code
+        span = span || document.createElement("span");
+        // $FlowFixMe[prop-missing]
+        const attributes = this.attributes;
+        if (attributes) {
+            // Apply attributes
+            for (const attr in attributes) {
+                if (attributes.hasOwnProperty(attr)) {
+                    span.setAttribute(attr, attributes[attr]);
+                }
+            }
         }
+        span.appendChild(node);
+        return span;
+        // endregion: my code
     }
 
     /**
@@ -479,6 +488,21 @@ export class SymbolNode implements HtmlDomNode {
             needsSpan = true;
             markup += " style=\"" + utils.escape(styles) + "\"";
         }
+
+
+        // region: my code
+        // $FlowFixMe
+        const attributes = this.attributes;
+        if (attributes) {
+            for (const attr in attributes) {
+                if (attributes.hasOwnProperty(attr)) {
+                    needsSpan = true;
+                    markup += ` ${attr}="${utils.escape(attributes[attr])}"`;
+                }
+            }
+        }
+        // endregion: my code
+
 
         const escaped = utils.escape(this.text);
         if (needsSpan) {

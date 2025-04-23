@@ -28,7 +28,7 @@ type Target = {|
  */
 const targets /*: Array<Target> */ = [
     {
-        name: 'katex',
+        name: 'blatex',
         entry: './katex.webpack.js',
         library: 'katex',
     },

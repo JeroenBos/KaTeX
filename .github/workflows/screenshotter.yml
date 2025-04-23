@@ -3,8 +3,7 @@ name: Screenshotter
 on:
   push:
     branches: [ main ]
-  pull_request_target:
-    branches: [ main ]
+  pull_request:
   workflow_dispatch:
 
 jobs:
@@ -12,12 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        browser: [chrome, firefox]
         include:
         - browser: chrome
           image: selenium/standalone-chrome:3.141.59-20210422
-        - browser: firefox
-          image: selenium/standalone-firefox:3.141.59-20210929
       fail-fast: false
     services:
       selenium:
@@ -30,7 +26,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
-        ref: ${{ github.event_name == 'pull_request_target' && format('refs/pull/{0}/merge', github.event.pull_request.number) || '' }}
         persist-credentials: false # do not persist credentials
 
     - name: Enable Corepack

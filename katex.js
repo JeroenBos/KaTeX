@@ -28,9 +28,12 @@ import type {AnyParseNode} from "./src/parseNode";
 import type {DomSpan} from "./src/domTree";
 
 import {defineSymbol} from './src/symbols';
-import defineFunction from './src/defineFunction';
 import defineMacro from './src/defineMacro';
 import {setFontMetrics} from './src/fontMetrics';
+
+import utils from "./src/utils";
+import defineFunction from "./src/defineFunction";
+import mathMLTree from "./src/mathMLTree";
 
 declare var __VERSION__: string;
 
@@ -73,6 +76,31 @@ const renderToString = function(
     return markup;
 };
 
+
+/**
+ * Build the katex build tree from parse tree.
+ */
+const parseToDomTree = function(
+    tree: AnyParseNode[],
+    expression: ?string,
+    options: SettingsOptions,
+): DomSpan {
+    const settings = new Settings(options);
+    try {
+        if (expression == null) {
+            // buildHTMLTree does not depend on expression so that we
+            // can pass null in (against signature)
+            // Without the expression we miss out on the MathML part
+            // $FlowFixMe
+            return buildHTMLTree(tree, expression, settings);
+        } else {
+            return buildTree(tree, expression, settings);
+        }
+    } catch (error) {
+        return renderError(error, expression || "?", settings);
+    }
+};
+
 /**
  * Parse an expression and return the parse tree.
  */
@@ -93,7 +121,7 @@ const renderError = function(
     error,
     expression: string,
     options: Settings,
-) {
+): DomSpan {
     if (options.throwOnError || !(error instanceof ParseError)) {
         throw error;
     }
@@ -138,6 +166,15 @@ const renderToHTMLTree = function(
     }
 };
 
+const renderTreeToString = function(
+    tree: AnyParseNode[],
+    expression: ?string,
+    options: SettingsOptions,
+): string {
+    // Without the expression the MathML part is not returned
+    return parseToDomTree(tree, expression, options).toMarkup();
+};
+
 const version = __VERSION__;
 
 const __domTree = {
@@ -149,24 +186,7 @@ const __domTree = {
     LineNode,
 };
 
-// ESM exports
-export {
-    version,
-    render,
-    renderToString,
-    ParseError,
-    SETTINGS_SCHEMA,
-    generateParseTree as __parse,
-    renderToDomTree as __renderToDomTree,
-    renderToHTMLTree as __renderToHTMLTree,
-    setFontMetrics as __setFontMetrics,
-    defineSymbol as __defineSymbol,
-    defineFunction as __defineFunction,
-    defineMacro as __defineMacro,
-    __domTree,
-};
 
-// CJS exports and ESM default export
 export default {
     /**
      * Current KaTeX version
@@ -236,6 +256,13 @@ export default {
      * adds a new macro to builtin macro list
      */
     __defineMacro: defineMacro,
+
+    utils,
+    __makeSpan: buildCommon.makeSpan,
+    MathNode: mathMLTree.MathNode,
+    __parseToDomTree: parseToDomTree,
+    __renderTreeToString: renderTreeToString,
+
     /**
      * Expose the dom tree node types, which can be useful for type checking nodes.
      *

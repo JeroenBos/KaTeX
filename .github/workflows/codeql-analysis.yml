@@ -14,9 +14,9 @@ permissions:
   security-events: write
 
 jobs:
-  if: false
   analyze:
     name: Analyze
+    if: false
     runs-on: ubuntu-latest
 
     steps:

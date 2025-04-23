@@ -27,6 +27,10 @@ website/static/static/katex.*
 website/static/static/fonts
 website/static/static/copy-tex.*
 website/static/static/mhchem.*
+.vscode/
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/settings.json
 
 # https://yarnpkg.com/advanced/qa#which-files-should-be-gitignored
 .yarn/*
