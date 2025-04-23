@@ -14,9 +14,9 @@ permissions:
   security-events: write
 
 jobs:
-  if: ${{ 'false' != 'true' }}  # I just want "false" but that syntax doesn't appear to exist?
   analyze:
     name: Analyze
+    if: false
     runs-on: ubuntu-latest
 
     steps:
