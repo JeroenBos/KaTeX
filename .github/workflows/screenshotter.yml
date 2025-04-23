@@ -12,7 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        browser: [chrome] # , firefox]
         include:
         - browser: chrome
           image: selenium/standalone-chrome:3.141.59-20210422

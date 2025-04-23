@@ -326,6 +326,7 @@ async function getProxyDriver() {
 }
 
 async function setupDriver() {
+    console.log('setting up driver');
     await driver.manage().setTimeouts({script: 5000});
 
     let html = '<!DOCTYPE html>' +
@@ -336,6 +337,7 @@ async function setupDriver() {
     await driver.get(html);
 
     await setSize(targetW, targetH);
+    console.log('set up up driver');
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -373,6 +375,7 @@ function imageDimensions(img) {
 // Work out how to connect to host KaTeX server
 
 async function findHostIP() {
+    console.log('finding host ip');
     if (!katexIP) {
         katexIP = "localhost";
     }
@@ -427,6 +430,8 @@ async function findHostIP() {
     html = "data:text/html," + encodeURIComponent(html);
     await driver.get(html);
     await connect;
+
+    console.log('exiting findHostIP');
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -436,6 +441,8 @@ let exitStatus = 0;
 const listOfFailed = [];
 
 async function takeScreenshots() {
+    console.log('Taking screenshots');
+
     for (const key of listOfCases) {
         await takeScreenshot(key);
     }
@@ -457,6 +464,7 @@ async function takeScreenshots() {
             report.execute(context);
         });
     }
+    console.log('Took screenshots');
 }
 
 async function takeScreenshot(key) {
