@@ -14,8 +14,6 @@ jobs:
         include:
         - browser: chrome
           image: selenium/standalone-chrome:3.141.59-20210422
-        # - browser: firefox
-        #   image: selenium/standalone-firefox:3.141.59-20210929
       fail-fast: false
     services:
       selenium:
@@ -28,7 +26,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
-        # ref: ${{ github.event_name == 'pull_request_target' && format('refs/pull/{0}/merge', github.event.pull_request.number) || '' }}
         persist-credentials: false # do not persist credentials
 
     - name: Enable Corepack
@@ -61,9 +58,9 @@ jobs:
           -w /code \
           -e CI=true \
           node:20 \
-          /bin/bash -c 'corepack enable && yarn node dockers/screenshotter/screenshotter.js -i Sqrt -b ${{ matrix.browser }} --verify --diff --new --katex-ip $HOSTNAME ${{ matrix.browserstack && format('--selenium-proxy http://selenium:4445/build --browserstack --selenium-capabilities ''\''''{0}''\', toJson(matrix.browserstack)) || '--selenium-ip selenium' }}'
+          /bin/bash -c 'corepack enable && yarn node dockers/screenshotter/screenshotter.js -b ${{ matrix.browser }} --verify --diff --new --katex-ip $HOSTNAME ${{ matrix.browserstack && format('--selenium-proxy http://selenium:4445/build --browserstack --selenium-capabilities ''\''''{0}''\', toJson(matrix.browserstack)) || '--selenium-ip selenium' }}'
         echo "::$TOKEN::"
-      timeout-minutes: 30
+      timeout-minutes: 10
 
     - name: Print Selenium Docker logs
       if: always()
