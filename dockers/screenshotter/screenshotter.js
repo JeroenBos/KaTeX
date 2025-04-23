@@ -343,7 +343,7 @@ async function setupDriver() {
 //////////////////////////////////////////////////////////////////////
 // Set the screen size
 
-const targetW = 1023;
+const targetW = 1024;
 const targetH = 768;
 let attempts = 0;
 async function setSize(width, height) {

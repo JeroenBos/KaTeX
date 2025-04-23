@@ -32,6 +32,27 @@ const targets /*: Array<Target> */ = [
         entry: './katex.webpack.js',
         library: 'katex',
     },
+    {
+        name: 'contrib/auto-render',
+        entry: './contrib/auto-render/auto-render.js',
+        library: 'renderMathInElement',
+    },
+    {
+        name: 'contrib/mhchem',
+        entry: './contrib/mhchem/mhchem.js',
+    },
+    {
+        name: 'contrib/copy-tex',
+        entry: './contrib/copy-tex/copy-tex.js',
+    },
+    {
+        name: 'contrib/mathtex-script-type',
+        entry: './contrib/mathtex-script-type/mathtex-script-type.js',
+    },
+    {
+        name: 'contrib/render-a11y-string',
+        entry: './contrib/render-a11y-string/render-a11y-string.js',
+    },
 ];
 
 /**
