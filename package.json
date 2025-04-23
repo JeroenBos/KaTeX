@@ -54,7 +54,7 @@
     "types/"
   ],
   "license": "MIT",
-  "packageManager": "yarn@4.1.1",
+  "packageManager": "yarn@4.9.1",
   "devDependencies": {
     "@babel/core": "^7.18.13",
     "@babel/eslint-parser": "^7.18.9",
