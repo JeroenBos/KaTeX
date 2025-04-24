@@ -45,8 +45,7 @@ jobs:
 
   release:
     runs-on: ubuntu-latest
-    # if: github.event_name == 'push' 🚧
-    environment: release
+    if: github.event_name == 'push'
     needs: test
     permissions:
       contents: read
