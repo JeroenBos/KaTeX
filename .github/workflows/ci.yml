@@ -87,5 +87,5 @@ jobs:
         echo "exists=$EXISTS" | tee --append $GITHUB_OUTPUT
 
     - name: Publish to GitHub Packages
-      if: steps.versioning.outputs.exists == 'false'
+      if: steps.versioning.outputs.exists == 'false'  # only publish a new version if the version in package.json has been updated
       run: npm publish --tag jeroenbos/katex@${{ steps.versioning.outputs.version }} --dry-run
