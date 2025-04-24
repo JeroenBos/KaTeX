@@ -1,6 +1,6 @@
 {
-  "name": "blatex",
-  "version": "0.0.1",
+  "name": "katex",
+  "version": "0.16.22.0",
   "description": "Fast math typesetting for the web in Blazor.",
   "main": "dist/katex.js",
   "exports": {
@@ -36,15 +36,11 @@
     },
     "./*": "./*"
   },
-  "homepage": "https://katex.org",
+  "homepage": "https://github.com/JeroenBos/KaTeX",
   "repository": {
     "type": "git",
-    "url": "https://github.com/KaTeX/KaTeX.git"
+    "url": "https://github.com/JeroenBos/KaTeX.git"
   },
-  "funding": [
-    "https://opencollective.com/katex",
-    "https://github.com/sponsors/katex"
-  ],
   "files": [
     "katex.js",
     "cli.js",
