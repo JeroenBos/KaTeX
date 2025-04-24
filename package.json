@@ -127,9 +127,7 @@
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.10.1"
   },
-  "bin": {
-    "katex": "cli.js"
-  },
+  "bin": "cli.js",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
