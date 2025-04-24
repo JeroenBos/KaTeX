@@ -49,3 +49,4 @@ fonts.tar
 fonts.tar.gz
 temp/
 .idea/
+yarn-error.log
