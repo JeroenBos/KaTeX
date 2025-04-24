@@ -68,6 +68,7 @@ jobs:
       env:
         YARN_ENABLE_SCRIPTS: 0 # disable postinstall scripts
     - name: Run semantic-release
+      if: false
       run: yarn run semantic-release --debug
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
