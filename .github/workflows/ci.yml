@@ -45,7 +45,7 @@ jobs:
 
   release:
     runs-on: ubuntu-latest
-    # if: github.event_name == 'push' 🚧
+    if: github.event_name == 'push'
     environment: release
     needs: test
 
@@ -76,3 +76,16 @@ jobs:
         GIT_AUTHOR_EMAIL: 15310631+JeroenBos@users.noreply.github.com
         GIT_COMMITTER_NAME: Jeroen Bos
         GIT_COMMITTER_EMAIL: 15310631+JeroenBos@users.noreply.github.com
+
+    - name: Get version
+      id: versioning
+      run: |
+        VERSION="$(jq -r '.name' package.json)"
+        npm view "@jeroenbos/katex@$VERSION" --registry=https://npm.pkg.github.com --json && EXISTS=true || EXISTS=false
+
+        echo "version=$VERSION" | tee --append $GITHUB_OUTPUT
+        echo "exists=$EXISTS" | tee --append $GITHUB_OUTPUT
+
+    - name: Publish to GitHub Packages
+      if: steps.versioning.outputs.exists == 'false'
+      run: npm publish --tag jeroenbos/katex@${{ steps.versioning.outputs.version }} --dry-run
