@@ -64,6 +64,8 @@ jobs:
         registry-url: 'https://npm.pkg.github.com'
         token: ${{ secrets.GH_TOKEN }}
 
+    - run: cat ./.npmrc
+
     - name: Install dependencies
       run: yarn --immutable
       env:
