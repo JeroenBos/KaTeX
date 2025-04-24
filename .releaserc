@@ -1,5 +1,5 @@
 {
-  "branches": "main",
+  "branches": "j/reinstate-deployments-to-github", // 🚧
   "plugins": [
     ["@semantic-release/github", {
       "assets": [
