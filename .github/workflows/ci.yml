@@ -48,6 +48,9 @@ jobs:
     # if: github.event_name == 'push' 🚧
     environment: release
     needs: test
+    permissions:
+      contents: read
+      packages: write
 
     steps:
     - uses: actions/checkout@v4
@@ -88,4 +91,4 @@ jobs:
 
     - name: Publish to GitHub Packages
       if: steps.versioning.outputs.exists == 'false'  # only publish a new version if the version in package.json has been updated
-      run: npm publish --tag jeroenbos/katex@${{ steps.versioning.outputs.version }} --dry-run
+      run: npm publish --tag jeroenbos/katex@${{ steps.versioning.outputs.version }}
