@@ -37,16 +37,11 @@ jobs:
       if: always()
 
     - name: Run Jest tests
-      run: yarn test:jest --coverage
+      run: yarn test:jest
       if: always()
 
     - name: Build
       run: yarn build
-
-    - uses: codecov/codecov-action@v3
-      with:
-        directory: ./coverage/
-      timeout-minutes: 3
 
   release:
     runs-on: ubuntu-latest
