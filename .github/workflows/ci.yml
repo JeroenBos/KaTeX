@@ -37,13 +37,63 @@ jobs:
       if: always()
 
     - name: Run Jest tests
-      run: yarn test:jest --coverage
+      run: yarn test:jest
       if: always()
 
     - name: Build
       run: yarn build
 
-    - uses: codecov/codecov-action@v3
+  release:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    needs: test
+
+    steps:
+    - uses: actions/checkout@v4
       with:
-        directory: ./coverage/
-      timeout-minutes: 3
+        persist-credentials: false
+        fetch-depth: 0
+
+    - name: Enable Corepack
+      run: corepack enable
+
+    - name: Use Node.js 20
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        registry-url: 'https://npm.pkg.github.com'
+        token: ${{ secrets.GH_TOKEN }}
+
+    - name: Authenticate to GitHub Packages
+      run: |
+        echo "@JeroenBos:registry=https://npm.pkg.github.com"           >  ./.npmrc
+        echo "//npm.pkg.github.com/:_authToken=${{ secrets.GH_TOKEN }}" >> ./.npmrc
+
+    - name: Install dependencies
+      run: yarn --immutable
+      env:
+        YARN_ENABLE_SCRIPTS: 0 # disable postinstall scripts
+    - name: Run semantic-release
+      if: false
+      run: yarn run semantic-release --debug
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        GIT_AUTHOR_NAME: Jeroen Bos
+        GIT_AUTHOR_EMAIL: 15310631+JeroenBos@users.noreply.github.com
+        GIT_COMMITTER_NAME: Jeroen Bos
+        GIT_COMMITTER_EMAIL: 15310631+JeroenBos@users.noreply.github.com
+
+    - name: Get version
+      id: versioning
+      run: |
+        VERSION="$(jq -r '.version' package.json)"
+        npm view "@jeroenbos/katex@$VERSION" --registry=https://npm.pkg.github.com --json && EXISTS=true || EXISTS=false
+
+        echo "version=$VERSION" | tee --append $GITHUB_OUTPUT
+        echo "exists=$EXISTS" | tee --append $GITHUB_OUTPUT
+
+    - name: Publish to GitHub Packages
+      if: steps.versioning.outputs.exists == 'false'  # only publish a new version if the version in package.json has been updated
+      run: npm publish --tag jeroenbos/katex@${{ steps.versioning.outputs.version }}
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

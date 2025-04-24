@@ -162,7 +162,6 @@ export default function defineFunction<NODETYPE: NodeType>({
     htmlBuilder,
     mathmlBuilder,
 }: FunctionDefSpec<NODETYPE>) {
-
     // Set default values of functions
     const data = {
         type,

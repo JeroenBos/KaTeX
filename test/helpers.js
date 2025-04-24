@@ -70,7 +70,6 @@ export const trustSettings = new Settings({trust: true});
  */
 export function getBuilt(expr, settings = new Settings()) {
     expr = r(expr); // support tagging literals
-
     let rootNode = katex.__renderToDomTree(expr, settings);
 
     if (rootNode.classes.indexOf('katex-error') >= 0) {

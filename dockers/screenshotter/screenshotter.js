@@ -355,7 +355,7 @@ async function setSize(width, height) {
     if (actualW === targetW && actualH === targetH) {
         return;
     }
-    if (++attempts > opts.attempts + 10) {
+    if (++attempts > opts.attempts) {
         throw new Error('Failed to set window size correctly.'
              + ` target=${targetW}×${targetH}, actual=${actualW}×${actualH}`);
     }
