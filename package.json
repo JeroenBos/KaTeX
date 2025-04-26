@@ -42,12 +42,13 @@
     "url": "git+https://github.com/JeroenBos/KaTeX.git"
   },
   "files": [
-    "katex.js",
-    "cli.js",
-    "src/",
-    "contrib/",
-    "dist/",
-    "types/"
+    "dist/fonts",
+    "dist/contrib",
+    "dist/katex.js",
+    "dist/katex.css",
+    "dist/katex.mjs",
+    "dist/katex.min.css",
+    "dist/katex.min.js"
   ],
   "license": "MIT",
   "packageManager": "yarn@4.9.1",

@@ -44,8 +44,8 @@ jobs:
       run: yarn build
 
   release:
+    name: release${{ github.event_name == 'push' && '' || ' (dry-run)'}}
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
     needs: test
 
     steps:
@@ -94,6 +94,7 @@ jobs:
 
     - name: Publish to GitHub Packages
       if: steps.versioning.outputs.exists == 'false'  # only publish a new version if the version in package.json has been updated
-      run: npm publish --tag jeroenbos/katex@${{ steps.versioning.outputs.version }}
+      run: npm publish --tag jeroenbos/katex@${{ steps.versioning.outputs.version }} ${{ env.DRY_RUN }}
       env:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        DRY_RUN: ${{ github.event_name == 'push' && '' || '--dry-run'}}
