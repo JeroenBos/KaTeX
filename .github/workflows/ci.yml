@@ -44,8 +44,8 @@ jobs:
       run: yarn build
 
   release:
+    name: release${{ github.event_name == 'push' && '' || ' (dry-run)'}}
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
     needs: test
 
     steps:
@@ -73,6 +73,10 @@ jobs:
       run: yarn --immutable
       env:
         YARN_ENABLE_SCRIPTS: 0 # disable postinstall scripts
+
+    - name: Build
+      run: yarn build
+        
     - name: Run semantic-release
       if: false
       run: yarn run semantic-release --debug
@@ -87,13 +91,15 @@ jobs:
       id: versioning
       run: |
         VERSION="$(jq -r '.version' package.json)"
-        npm view "@jeroenbos/katex@$VERSION" --registry=https://npm.pkg.github.com --json && EXISTS=true || EXISTS=false
+        npm view "@jeroenbos/katex@$VERSION" --registry=https://npm.pkg.github.com --json && EXISTS=true || EXISTS=false 1>/dev/null
 
         echo "version=$VERSION" | tee --append $GITHUB_OUTPUT
         echo "exists=$EXISTS" | tee --append $GITHUB_OUTPUT
 
     - name: Publish to GitHub Packages
-      if: steps.versioning.outputs.exists == 'false'  # only publish a new version if the version in package.json has been updated
-      run: npm publish --tag jeroenbos/katex@${{ steps.versioning.outputs.version }}
+      # only publish a new version if the version in package.json has been updated, OR we're doing a dry-run
+      if: steps.versioning.outputs.exists == 'false' || github.event_name != 'push'
+      run: npm publish --tag jeroenbos/katex@${{ steps.versioning.outputs.version }} ${{ env.DRY_RUN }}
       env:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        DRY_RUN: ${{ github.event_name == 'push' && '' || '--dry-run'}}
