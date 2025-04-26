@@ -73,9 +73,9 @@
     "babel-plugin-preval": "^5.1.0",
     "babel-plugin-version-inline": "^1.0.0",
     "benchmark": "^2.1.4",
-    "browserslist": "^4.21.3",
+    "browserslist": "^4.24.4",
     "browserstack-local": "^1.5.1",
-    "caniuse-lite": "^1.0.30001384",
+    "caniuse-lite": "^1.0.30001715",
     "css-loader": "^6.7.1",
     "cssnano": "^5.1.13",
     "eslint": "^8.23.0",
@@ -114,7 +114,7 @@
     "rollup": "^2.79.2",
     "sass": "^1.75.6",
     "sass-loader": "^14.2.1",
-    "selenium-webdriver": "^4.4.0",
+    "selenium-webdriver": "^4.31.0",
     "semantic-release": "^19.0.5",
     "sri-toolbox": "^0.2.0",
     "style-loader": "^3.3.1",
@@ -158,7 +158,7 @@
     "dist:zip": "rimraf katex/ katex.tar.gz katex.zip && cp -R dist katex && tar czf katex.tar.gz katex && zip -rq katex.zip katex && rimraf katex/"
   },
   "dependencies": {
-    "commander": "^8.3.0"
+    "commander": "^13.1.0"
   },
   "husky": {
     "hooks": {
