@@ -87,7 +87,7 @@ jobs:
       id: versioning
       run: |
         VERSION="$(jq -r '.version' package.json)"
-        npm view "@jeroenbos/katex@$VERSION" --registry=https://npm.pkg.github.com --json && EXISTS=true || EXISTS=false
+        npm view "@jeroenbos/katex@$VERSION" --registry=https://npm.pkg.github.com --json && EXISTS=true || EXISTS=false 1>/dev/null
 
         echo "version=$VERSION" | tee --append $GITHUB_OUTPUT
         echo "exists=$EXISTS" | tee --append $GITHUB_OUTPUT
