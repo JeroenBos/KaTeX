@@ -4,7 +4,7 @@
 const fs = require("fs");
 const childProcess = require("child_process");
 
-const opts = require("commander")
+const opts = require("commander").program
     .option("-s, --spacing",
         "Print mismatches involving spacing commands")
     .parse(process.argv);
