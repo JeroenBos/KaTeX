@@ -1829,7 +1829,7 @@ __metadata:
     browserslist: "npm:^4.24.4"
     browserstack-local: "npm:^1.5.1"
     caniuse-lite: "npm:^1.0.30001715"
-    commander: "npm:13.1.0"
+    commander: "npm:^13.1.0"
     css-loader: "npm:^6.7.1"
     cssnano: "npm:^5.1.13"
     eslint: "npm:^8.23.0"
@@ -4945,7 +4945,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:13.1.0":
+"commander@npm:^13.1.0":
   version: 13.1.0
   resolution: "commander@npm:13.1.0"
   checksum: 10/d3b4b79e6be8471ddadacbb8cd441fe82154d7da7393b50e76165a9e29ccdb74fa911a186437b9a211d0fc071db6051915c94fb8ef16d77511d898e9dbabc6af

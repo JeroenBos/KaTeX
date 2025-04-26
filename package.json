@@ -158,7 +158,7 @@
     "dist:zip": "rimraf katex/ katex.tar.gz katex.zip && cp -R dist katex && tar czf katex.tar.gz katex && zip -rq katex.zip katex && rimraf katex/"
   },
   "dependencies": {
-    "commander": "13.1.0"
+    "commander": "^13.1.0"
   },
   "husky": {
     "hooks": {
