@@ -1,6 +1,6 @@
 {
   "name": "@jeroenbos/katex",
-  "version": "0.16.22-3",
+  "version": "0.16.22-2",
   "description": "Fast math typesetting for the web in Blazor.",
   "main": "dist/katex.js",
   "exports": {

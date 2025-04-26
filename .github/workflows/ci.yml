@@ -44,9 +44,11 @@ jobs:
       run: yarn build
 
   release:
-    name: release${{ github.event_name == 'push' && '' || ' (dry-run)'}}
+    name: release${{ github.event_name != 'push' && ' (dry-run)' || '' }}
     runs-on: ubuntu-latest
     needs: test
+    env:
+      DRY_RUN: ${{ github.event_name != 'push' && true || false }}
 
     steps:
     - uses: actions/checkout@v4
@@ -98,8 +100,7 @@ jobs:
 
     - name: Publish to GitHub Packages
       # only publish a new version if the version in package.json has been updated, OR we're doing a dry-run
-      if: steps.versioning.outputs.exists == 'false' || github.event_name != 'push'
-      run: npm publish --tag jeroenbos/katex@${{ steps.versioning.outputs.version }} ${{ env.DRY_RUN }}
+      if: steps.versioning.outputs.exists == 'false' || env.DRY_RUN == 'true'
+      run: npm publish --tag jeroenbos/katex@${{ steps.versioning.outputs.version }} ${{ env.DRY_RUN == 'true' && '--dry-run' || '' }}
       env:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        DRY_RUN: ${{ github.event_name == 'push' && '' || '--dry-run'}}
