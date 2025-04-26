@@ -92,6 +92,8 @@ jobs:
         echo "version=$VERSION" | tee --append $GITHUB_OUTPUT
         echo "exists=$EXISTS" | tee --append $GITHUB_OUTPUT
 
+    - name: debug 🚧
+      run: cd dist && ls
     - name: Publish to GitHub Packages
       # only publish a new version if the version in package.json has been updated, OR we're doing a dry-run
       if: steps.versioning.outputs.exists == 'false' || github.event_name != 'push'
