@@ -73,6 +73,10 @@ jobs:
       run: yarn --immutable
       env:
         YARN_ENABLE_SCRIPTS: 0 # disable postinstall scripts
+
+    - name: Build
+      run: yarn build
+        
     - name: Run semantic-release
       if: false
       run: yarn run semantic-release --debug
@@ -93,7 +97,7 @@ jobs:
         echo "exists=$EXISTS" | tee --append $GITHUB_OUTPUT
 
     - name: debug 🚧
-      run: cd dist && ls
+      run: ls; cd dist && ls
     - name: Publish to GitHub Packages
       # only publish a new version if the version in package.json has been updated, OR we're doing a dry-run
       if: steps.versioning.outputs.exists == 'false' || github.event_name != 'push'
