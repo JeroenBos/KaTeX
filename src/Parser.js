@@ -508,7 +508,12 @@ export default class Parser {
         };
         const func = functions[name];
         if (func && func.handler) {
-            return func.handler(context, args, optArgs);
+            const result: UnsupportedCmdParseNode | AnyParseNode =
+                func.handler(context, args, optArgs);
+            if (token?.loc && !result.loc) {
+                result.loc = token.loc;
+            }
+            return result;
         } else {
             throw new ParseError(`No function handler for ${name}`);
         }
