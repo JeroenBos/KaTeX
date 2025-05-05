@@ -7,4 +7,5 @@
     "**/.yarn": true,
     "**/.pnp.*": true
   },
+  "flow.coverageSeverity": "error",
 }
