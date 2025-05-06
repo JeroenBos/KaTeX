@@ -1787,22 +1787,22 @@ describe("A comment parser", function() {
 describe("An HTML font tree-builder", function() {
     it("should render \\mathbb{R} with the correct font", function() {
         const markup = katex.renderToString(r`\mathbb{R}`);
-        expect(markup).toContain("<span class=\"mord mathbb\" data-loc=\"8,9\">R</span>");
+        expect(markup).toContain("<span class=\"mord mathbb\" data-loc=\"0,10\">R</span>");
     });
 
     it("should render \\mathrm{R} with the correct font", function() {
         const markup = katex.renderToString(r`\mathrm{R}`);
-        expect(markup).toContain("<span class=\"mord mathrm\" data-loc=\"8,9\">R</span>");
+        expect(markup).toContain("<span class=\"mord mathrm\" data-loc=\"0,10\">R</span>");
     });
 
     it("should render \\mathcal{R} with the correct font", function() {
         const markup = katex.renderToString(r`\mathcal{R}`);
-        expect(markup).toContain("<span class=\"mord mathcal\" data-loc=\"9,10\">R</span>");
+        expect(markup).toContain("<span class=\"mord mathcal\" data-loc=\"0,11\">R</span>");
     });
 
     it("should render \\mathfrak{R} with the correct font", function() {
         const markup = katex.renderToString(r`\mathfrak{R}`);
-        expect(markup).toContain("<span class=\"mord mathfrak\" data-loc=\"10,11\">R</span>");
+        expect(markup).toContain("<span class=\"mord mathfrak\" data-loc=\"0,12\">R</span>");
     });
 
     it("should render \\text{R} with the correct font", function() {
@@ -1864,7 +1864,7 @@ describe("An HTML font tree-builder", function() {
 
     it("should render \\textsf{\\textbf{$\\mathrm{A}$}} with the correct font", function() {
         const markup = katex.renderToString(r`\textsf{\textbf{$\mathrm{A}$}}`);
-        expect(markup).toContain("<span class=\"mord mathrm\" data-loc=\"25,26\">A</span>");
+        expect(markup).toContain("<span class=\"mord mathrm\" data-loc=\"17,27\">A</span>");
     });
 
     it("should render \\textsf{\\textbf{$\\mathrm{\\textsf{A}}$}} with the correct font", function() {
@@ -1879,7 +1879,7 @@ describe("An HTML font tree-builder", function() {
 
     it("should render a combination of font and color changes", function() {
         let markup = katex.renderToString(r`\textcolor{blue}{\mathbb R}`);
-        let span = "<span class=\"mord mathbb\" style=\"color:blue;\" data-loc=\"25,26\">R</span>";
+        let span = "<span class=\"mord mathbb\" style=\"color:blue;\" data-loc=\"17,26\">R</span>";
         expect(markup).toContain(span);
 
         markup = katex.renderToString(r`\mathbb{\textcolor{blue}{R}}`);
@@ -2155,6 +2155,7 @@ describe("An HTML extension builder", function() {
         expect(built[3].attributes).toEqual({
             "data-bar": "b",
             "data-foo": "a",
+            "data-loc": "59,85",
         });
     });
 
@@ -3025,7 +3026,7 @@ describe("href and url commands", function() {
 
     it("should be marked up correctly", function() {
         const markup = katex.renderToString(r`\href{http://example.com/}{example here}`, {trust: true});
-        expect(markup).toContain("<a href=\"http://example.com/\">");
+        expect(markup).toContain("<a href=\"http://example.com/\" data-loc=\"0,40\">");
     });
 
     it("should not affect spacing around", function() {
@@ -4147,7 +4148,7 @@ describe("Newlines via \\\\ and \\newline", function() {
         // Ensure newlines appear outside base spans (because, in this regexp,
         // base span occurs immediately after each newline span).
         expect(markup).toMatch(
-            /(<span class="base">.*?<\/span><span class="mspace newline"><\/span>){3}<span class="base">/);
+            /(<span class="base">.*?<\/span><span class="mspace newline" data-loc="[0-9,]+"><\/span>){3}<span class="base">/);
         expect(markup).toMatchSnapshot();
     });
 });

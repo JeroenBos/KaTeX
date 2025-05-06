@@ -1,6 +1,6 @@
 {
   "name": "@jeroenbos/katex",
-  "version": "0.16.22-2",
+  "version": "0.16.22-3",
   "description": "Fast math typesetting for the web in Blazor.",
   "main": "dist/katex.js",
   "exports": {
@@ -132,9 +132,9 @@
     "registry": "https://npm.pkg.github.com"
   },
   "scripts": {
-    "test": "yarn test:lint && yarn test:flow && yarn test:jest",
-    "test:lint": "yarn test:lint:js && yarn test:lint:css",
-    "test:lint:js": "eslint .",
+    "test": "yarn test:lint && yarn test:jest && yarn test:flow",
+    "test:lint": "yarn lint && yarn test:lint:css",
+    "lint": "eslint .",
     "test:lint:css": "stylelint src/styles/katex.scss static/main.css website/static/**/*.css",
     "test:flow": "flow",
     "test:jest": "jest",

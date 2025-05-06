@@ -134,6 +134,10 @@ exports[`A begin/end parser should grab \\arraystretch 1`] = `
       ]
     ],
     "hskipBeforeAndAfter": false,
+    "loc": {
+      "end": 36,
+      "start": 22
+    },
     "mode": "math",
     "rowGaps": [
       null
@@ -164,6 +168,7 @@ exports[`A font parser \\boldsymbol should inherit mbin/mrel from argument 1`] =
   },
   {
     "attributes": {
+      "data-loc": "1,14"
     },
     "children": [
       {
@@ -226,6 +231,7 @@ exports[`A font parser \\boldsymbol should inherit mbin/mrel from argument 1`] =
   },
   {
     "attributes": {
+      "data-loc": "15,29"
     },
     "children": [
       {
@@ -321,6 +327,7 @@ exports[`A font parser \\boldsymbol should inherit mbin/mrel from argument 1`] =
   },
   {
     "attributes": {
+      "data-loc": "30,44"
     },
     "children": [
       {
@@ -416,6 +423,7 @@ exports[`A font parser \\boldsymbol should inherit mbin/mrel from argument 1`] =
   },
   {
     "attributes": {
+      "data-loc": "45,60"
     },
     "children": [
       {
@@ -496,6 +504,7 @@ exports[`A font parser \\boldsymbol should inherit mbin/mrel from argument 1`] =
   },
   {
     "attributes": {
+      "data-loc": "61,77"
     },
     "children": [
       {
@@ -589,6 +598,10 @@ exports[`A macro expander \\let should consume one optional space after equals s
           "mode": "math"
         },
         "font": "mathbf",
+        "loc": {
+          "end": 20,
+          "start": 17
+        },
         "mode": "math"
       }
     ],
@@ -662,6 +675,7 @@ exports[`An HTML extension builder should not affect spacing 1`] = `
 [
   {
     "attributes": {
+      "data-loc": "0,14",
       "id": "a"
     },
     "children": [
@@ -765,6 +779,7 @@ exports[`An HTML extension builder should render with trust and strict setting 1
 [
   {
     "attributes": {
+      "data-loc": "0,15",
       "id": "bar"
     },
     "children": [
@@ -798,6 +813,7 @@ exports[`An HTML extension builder should render with trust and strict setting 1
   },
   {
     "attributes": {
+      "data-loc": "15,33"
     },
     "children": [
       {
@@ -831,6 +847,7 @@ exports[`An HTML extension builder should render with trust and strict setting 1
   },
   {
     "attributes": {
+      "data-loc": "33,59",
       "style": "color: red;"
     },
     "children": [
@@ -865,7 +882,8 @@ exports[`An HTML extension builder should render with trust and strict setting 1
   {
     "attributes": {
       "data-bar": "b",
-      "data-foo": "a"
+      "data-foo": "a",
+      "data-loc": "59,85"
     },
     "children": [
       {
@@ -1097,6 +1115,9 @@ exports[`An includegraphics builder should render with trust setting 1`] = `
 [
   {
     "alt": "KA logo",
+    "attributes": {
+      "data-loc": "0,16"
+    },
     "classes": [
       "mord"
     ],
@@ -1253,7 +1274,9 @@ exports[`Newlines via \\\\ and \\newline \\\\ causes newline, even after mrel an
         =
       </span>
     </span>
-    <span class="mspace newline">
+    <span class="mspace newline"
+          data-loc="4,6"
+    >
     </span>
     <span class="base">
       <span class="strut"
@@ -1275,7 +1298,9 @@ exports[`Newlines via \\\\ and \\newline \\\\ causes newline, even after mrel an
         +
       </span>
     </span>
-    <span class="mspace newline">
+    <span class="mspace newline"
+          data-loc="11,13"
+    >
     </span>
     <span class="base">
       <span class="strut"
@@ -1288,7 +1313,9 @@ exports[`Newlines via \\\\ and \\newline \\\\ causes newline, even after mrel an
         b
       </span>
     </span>
-    <span class="mspace newline">
+    <span class="mspace newline"
+          data-loc="16,18"
+    >
     </span>
     <span class="base">
       <span class="strut"
@@ -1351,6 +1378,10 @@ exports[`href and url commands should allow all protocols when trust option is t
       }
     ],
     "href": "ftp://x",
+    "loc": {
+      "end": 19,
+      "start": 0
+    },
     "mode": "math"
   }
 ]
@@ -1402,6 +1433,10 @@ exports[`href and url commands should allow explicitly allowed protocols 1`] = `
       }
     ],
     "href": "ftp://x",
+    "loc": {
+      "end": 19,
+      "start": 0
+    },
     "mode": "math"
   }
 ]
@@ -1445,6 +1480,10 @@ exports[`href and url commands should forbid relative URLs when trust option is 
       }
     ],
     "color": "#cc0000",
+    "loc": {
+      "end": 20,
+      "start": 0
+    },
     "mode": "math"
   }
 ]
@@ -1487,6 +1526,7 @@ exports[`href and url commands should not affect spacing around 1`] = `
   },
   {
     "attributes": {
+      "data-loc": "1,31",
       "href": "http://example.com/"
     },
     "children": [
@@ -1590,6 +1630,10 @@ exports[`href and url commands should not allow explicitly disallowed protocols 
       }
     ],
     "color": "#cc0000",
+    "loc": {
+      "end": 33,
+      "start": 0
+    },
     "mode": "math"
   }
 ]
@@ -1633,6 +1677,10 @@ exports[`href and url commands should not allow explicitly uppercased disallowed
       }
     ],
     "color": "#cc0000",
+    "loc": {
+      "end": 33,
+      "start": 0
+    },
     "mode": "math"
   }
 ]

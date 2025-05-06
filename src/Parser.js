@@ -508,7 +508,23 @@ export default class Parser {
         };
         const func = functions[name];
         if (func && func.handler) {
-            return func.handler(context, args, optArgs);
+            const result: UnsupportedCmdParseNode | AnyParseNode =
+                func.handler(context, args, optArgs);
+            const lastArg: ?AnyParseNode =
+                optArgs?.[0]
+                ?? (args.length ? args[args.length - 1] : undefined)
+                ?? undefined;
+            const endLoc: ?SourceLocation = lastArg?.loc;
+
+            if (token?.loc && !result.loc) {
+                const locationWithoutLexer: any = {
+                    start: token.loc.start,
+                    end: endLoc?.end ?? token.loc.end,
+                };
+                const sourceLocation: SourceLocation = locationWithoutLexer;
+                result.loc = sourceLocation;
+            }
+            return result;
         } else {
             throw new ParseError(`No function handler for ${name}`);
         }
