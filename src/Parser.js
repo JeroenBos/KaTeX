@@ -510,14 +510,19 @@ export default class Parser {
         if (func && func.handler) {
             const result: UnsupportedCmdParseNode | AnyParseNode =
                 func.handler(context, args, optArgs);
-            const lastArg: { loc: SourceLocation } =
-                optArgs?.[0] ?? (args.length ? args[args.length - 1] : token);
+            const lastArg: ?AnyParseNode =
+                optArgs?.[0]
+                ?? (args.length ? args[args.length - 1] : undefined)
+                ?? undefined;
+            const endLoc: ?SourceLocation = lastArg?.loc;
 
             if (token?.loc && !result.loc) {
-                result.loc = {
+                const locationWithoutLexer: any = {
                     start: token.loc.start,
-                    end: lastArg.loc?.end ?? token.loc.end,
+                    end: endLoc?.end ?? token.loc.end,
                 };
+                const sourceLocation: SourceLocation = locationWithoutLexer;
+                result.loc = sourceLocation;
             }
             return result;
         } else {
