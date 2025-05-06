@@ -108,7 +108,7 @@ export const stripPositions = expr => {
     if (typeof expr !== "object" || expr === null) {
         return expr;
     }
-    if (expr.loc && expr.loc.lexer && typeof expr.loc.start === "number") {
+    if (expr.loc && typeof expr.loc.start === "number") {
         delete expr.loc;
     }
     if (expr['data-loc']) {
