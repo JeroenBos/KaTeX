@@ -42,15 +42,16 @@ describe("\\blatex{}", function() {
         expect(root.args[1].string).toBe("optArg");
     });
 
-    it("renders arg", function() {
+    it("renders arg", () => {
         const html = katex.renderToString("\\blatex{arg}");
         expect(html).toMatchSnapshot();
     });
-    it("renders arg and optional arg", function() {
+    it("renders arg and optional arg", () => {
         const html = katex.renderToString("\\blatex[optArg]{arg}");
         expect(html).toMatchSnapshot();
     });
-    it("renders mathematical arg", function() {
+    it("renders mathematical arg raw", () => {
+        // if you want subexpressions, the blatex command is going to have to rerender another KaTeX markup string
         const html = katex.renderToString("\\blatex{\\sqrt{x}}");
         expect(html).toMatchSnapshot();
     });
