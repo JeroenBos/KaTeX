@@ -27,10 +27,7 @@ defineFunction({
           ? undefined
           : assertNodeType(optArgs[0], "raw");
         const funcNameTokenLoc = assertLocationSpecified(token.loc);
-        const funcCallLoc = SourceLocation.merge(
-            funcNameTokenLoc,
-            optArgNode ? optArgNode.loc : argNode.loc
-        );
+        const funcCallLoc = SourceLocation.merge(funcNameTokenLoc, argNode.loc);
         const parseNodeArgs: AnyParseNode[] = [
             {
                 type: "raw",
