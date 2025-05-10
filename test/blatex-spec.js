@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import {assertNodeType} from "../src/parseNode";
 import parseTree from "../src/parseTree";
-import {nonstrictSettings, assertEquivalentHtml} from "./helpers";
+import {nonstrictSettings} from "./helpers";
 import katex from "../katex";
 
 describe("\\blatex{}", function() {
@@ -44,50 +44,14 @@ describe("\\blatex{}", function() {
 
     it("renders arg", function() {
         const html = katex.renderToString("\\blatex{arg}");
-
-        assertEquivalentHtml(html, `
-            <span class="katex">
-                <span class="katex-mathml">
-                    <math xmlns="http://www.w3.org/1998/Math/MathML">
-                        <semantics><mrow><annotation>arg</annotation></mrow>
-                            <annotation encoding="application/x-tex">\\blatex{arg}</annotation>
-                        </semantics>
-                    </math>
-                </span>
-                <span class="katex-html" aria-hidden="true">
-                    <span class="base">
-                        <span class="strut" style="height:0.4306em;">
-                        </span>
-                        <span data-loc="0,7">
-                            arg
-                        </span>
-                    </span>
-                </span>
-            </span>`
-        );
+        expect(html).toMatchSnapshot();
     });
     it("renders arg and optional arg", function() {
         const html = katex.renderToString("\\blatex[optArg]{arg}");
-
-        assertEquivalentHtml(html, `
-            <span class="katex">
-                <span class="katex-mathml">
-                    <math xmlns="http://www.w3.org/1998/Math/MathML">
-                        <semantics><mrow><annotation>argoptArg</annotation></mrow>
-                            <annotation encoding="application/x-tex">\\blatex[optArg]{arg}</annotation>
-                        </semantics>
-                    </math>
-                </span>
-                <span class="katex-html" aria-hidden="true">
-                    <span class="base">
-                        <span class="strut" style="height:0.4306em;">
-                        </span>
-                        <span data-blatex="optArg" data-loc="0,7">
-                            arg
-                        </span>
-                    </span>
-                </span>
-            </span>`
-        );
+        expect(html).toMatchSnapshot();
+    });
+    it("renders mathematical arg", function() {
+        const html = katex.renderToString("\\blatex{\\sqrt{x}}");
+        expect(html).toMatchSnapshot();
     });
 });

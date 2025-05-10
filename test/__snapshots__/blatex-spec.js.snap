@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`\\blatex{} renders arg 1`] = `
+<span class="katex">
+  <span class="katex-mathml">
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <semantics>
+        <mrow>
+          <annotation>
+            arg
+          </annotation>
+        </mrow>
+        <annotation encoding="application/x-tex">
+          \\blatex{arg}
+        </annotation>
+      </semantics>
+    </math>
+  </span>
+  <span class="katex-html"
+        aria-hidden="true"
+  >
+    <span class="base">
+      <span class="strut"
+            style="height:0.4306em;"
+      >
+      </span>
+      <span data-loc="0,7">
+        arg
+      </span>
+    </span>
+  </span>
+</span>
+`;
+
+exports[`\\blatex{} renders arg and optional arg 1`] = `
+<span class="katex">
+  <span class="katex-mathml">
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <semantics>
+        <mrow>
+          <annotation>
+            argoptArg
+          </annotation>
+        </mrow>
+        <annotation encoding="application/x-tex">
+          \\blatex[optArg]{arg}
+        </annotation>
+      </semantics>
+    </math>
+  </span>
+  <span class="katex-html"
+        aria-hidden="true"
+  >
+    <span class="base">
+      <span class="strut"
+            style="height:0.4306em;"
+      >
+      </span>
+      <span data-blatex="optArg"
+            data-loc="0,7"
+      >
+        arg
+      </span>
+    </span>
+  </span>
+</span>
+`;
+
+exports[`\\blatex{} renders mathematical arg 1`] = `
+<span class="katex">
+  <span class="katex-mathml">
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <semantics>
+        <mrow>
+          <annotation>
+            \\sqrt{x}
+          </annotation>
+        </mrow>
+        <annotation encoding="application/x-tex">
+          \\blatex{\\sqrt{x}}
+        </annotation>
+      </semantics>
+    </math>
+  </span>
+  <span class="katex-html"
+        aria-hidden="true"
+  >
+    <span class="base">
+      <span class="strut"
+            style="height:1em;vertical-align:-0.25em;"
+      >
+      </span>
+      <span data-loc="0,7">
+        \\sqrt{x}
+      </span>
+    </span>
+  </span>
+</span>
+`;
