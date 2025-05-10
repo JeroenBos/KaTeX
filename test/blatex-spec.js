@@ -45,14 +45,17 @@ describe("\\blatex{}", function() {
     it("renders arg", () => {
         const html = katex.renderToString("\\blatex{arg}");
         expect(html).toMatchSnapshot();
+        expect(html).toMatch(`<span data-loc="0,12">arg</span>`);
     });
     it("renders arg and optional arg", () => {
         const html = katex.renderToString("\\blatex[optArg]{arg}");
         expect(html).toMatchSnapshot();
+        expect(html).toContain('data-blatex="optArg"');
     });
     it("renders mathematical arg raw", () => {
         // if you want subexpressions, the blatex command is going to have to rerender another KaTeX markup string
         const html = katex.renderToString("\\blatex{\\sqrt{x}}");
         expect(html).toMatchSnapshot();
+        expect(html).toMatch(`<span data-loc="0,17">\\sqrt{x}</span>`);
     });
 });
