@@ -11,9 +11,9 @@ defineFunction({
     type: "blatex",
     names: ["\\blatex"],
     props: {
-        numOptionalArgs: 0,
+        numOptionalArgs: 1,
         numArgs: 1,
-        argTypes: ["raw"], // optional argument types come first
+        argTypes: ["raw", "raw"], // optional argument types come first
         allowedInText: true,
     },
     handler({parser, funcName, token}, args, optArgs) {
