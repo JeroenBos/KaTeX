@@ -160,11 +160,6 @@
   "dependencies": {
     "commander": "^13.1.0"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn test:lint"
-    }
-  },
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.js",
