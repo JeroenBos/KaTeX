@@ -57,7 +57,7 @@ defineFunction({
     htmlBuilder(group: ParseNode<"blatex">, options) {
         const argNode = assertNodeType(group.args[0], "raw");
         const element = buildCommon.makeSpan([], [
-            buildCommon.makeSymbol(argNode.string, "Main-Regular", "text"),
+            buildCommon.makeSymbol(argNode.string, "Main-Regular", "text", options),
         ], options);
 
         if (group.args.length !== 1) {
@@ -65,8 +65,7 @@ defineFunction({
             element.setAttribute("data-blatex", optArgNode.string);
         }
 
-        const wrapper = buildCommon.makeSpan([], [element], options);
-        return wrapper;
+        return element;
     },
     mathmlBuilder(group, options) {
         const children: MathDomNode[] = [];
