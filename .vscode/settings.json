@@ -5,6 +5,7 @@
   "flow.pathToFlow": "${workspaceFolder}/.yarn/sdks/flow-bin/cli.js",
   "search.exclude": {
     "**/.yarn": true,
-    "**/.pnp.*": true
+    "**/.pnp.*": true,
+    "**/yarn.lock": true,
   },
 }
