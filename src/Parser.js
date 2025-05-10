@@ -510,10 +510,8 @@ export default class Parser {
         if (func && func.handler) {
             const result: UnsupportedCmdParseNode | AnyParseNode =
                 func.handler(context, args, optArgs);
-            const lastArg: ?AnyParseNode =
-                optArgs?.[0]
-                ?? (args.length ? args[args.length - 1] : undefined)
-                ?? undefined;
+            const lastArg: ?AnyParseNode = // required args come after optional
+                args.length ? args[args.length - 1] : optArgs?.[0];
             const endLoc: ?SourceLocation = lastArg?.loc;
 
             if (token?.loc && !result.loc) {
@@ -607,6 +605,7 @@ export default class Parser {
                     type: "raw",
                     mode: "text",
                     string: token.text,
+                    loc: token.loc,
                 } : null;
             }
             case "primitive": {

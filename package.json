@@ -1,6 +1,6 @@
 {
   "name": "@jeroenbos/katex",
-  "version": "0.16.22-3",
+  "version": "0.16.22-4",
   "description": "Fast math typesetting for the web in Blazor.",
   "main": "dist/katex.js",
   "exports": {
@@ -73,9 +73,9 @@
     "babel-plugin-preval": "^5.1.0",
     "babel-plugin-version-inline": "^1.0.0",
     "benchmark": "^2.1.4",
-    "browserslist": "^4.24.4",
+    "browserslist": "^4.24.5",
     "browserstack-local": "^1.5.1",
-    "caniuse-lite": "^1.0.30001715",
+    "caniuse-lite": "^1.0.30001717",
     "css-loader": "^6.7.1",
     "cssnano": "^5.1.13",
     "eslint": "^8.23.0",
@@ -159,11 +159,6 @@
   },
   "dependencies": {
     "commander": "^13.1.0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn test:lint"
-    }
   },
   "jest": {
     "collectCoverageFrom": [

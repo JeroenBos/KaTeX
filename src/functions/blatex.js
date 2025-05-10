@@ -1,5 +1,5 @@
 // @flow
-import type {ParseNode} from "../parseNode";
+import type {AnyParseNode, ParseNode} from "../parseNode";
 import {assertNodeType} from "../parseNode";
 import SourceLocation from "../SourceLocation";
 import defineFunction from "../defineFunction";
@@ -11,9 +11,9 @@ defineFunction({
     type: "blatex",
     names: ["\\blatex"],
     props: {
-        numOptionalArgs: 0,
+        numOptionalArgs: 1,
         numArgs: 1,
-        argTypes: ["raw"], // optional argument types come first
+        argTypes: ["raw", "raw"], // optional argument types come first
         allowedInText: true,
     },
     handler({parser, funcName, token}, args, optArgs) {
@@ -23,33 +23,46 @@ defineFunction({
 
         const argNode = assertNodeType(args[0], "raw");
         const value = argNode.string.trim();
+        const optArgNode = !optArgs?.[0]
+          ? undefined
+          : assertNodeType(optArgs[0], "raw");
         const funcNameTokenLoc = assertLocationSpecified(token.loc);
         const funcCallLoc = SourceLocation.merge(funcNameTokenLoc, argNode.loc);
+        const parseNodeArgs: AnyParseNode[] = [
+            {
+                type: "raw",
+                mode: parser.mode,
+                string: value,
+            },
+        ];
+        if (optArgNode) {
+            parseNodeArgs.push({
+                type: "raw",
+                mode: parser.mode,
+                string: optArgNode.string.trim(),
+            });
+        }
         const result: ParseNode<"blatex"> = {
             type: "blatex",
             mode: parser.mode,
-            args: [
-                {
-                    type: "raw",
-                    mode: parser.mode,
-                    string: value,
-                },
-            ],
+            args: parseNodeArgs,
             loc: funcCallLoc,
         };
         return result;
     },
 
     htmlBuilder(group: ParseNode<"blatex">, options) {
-        const element = buildCommon.makeSpan([], [], options);
         const argNode = assertNodeType(group.args[0], "raw");
-        const loc = assertLocationSpecified(group.loc);
+        const element = buildCommon.makeSpan([], [
+            buildCommon.makeSymbol(argNode.string, "Main-Regular", "text", options),
+        ], options);
 
-        element.setAttribute("data-blatex", argNode.string);
-        element.setAttribute("data-loc", loc.start + "," + loc.end);
+        if (group.args.length !== 1) {
+            const optArgNode = assertNodeType(group.args[1], "raw");
+            element.setAttribute("data-blatex", optArgNode.string);
+        }
 
-        const wrapper = buildCommon.makeSpan([], [element], options);
-        return wrapper;
+        return element;
     },
     mathmlBuilder(group, options) {
         const children: MathDomNode[] = [];
