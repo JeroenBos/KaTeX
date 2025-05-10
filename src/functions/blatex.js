@@ -55,12 +55,15 @@ defineFunction({
     },
 
     htmlBuilder(group: ParseNode<"blatex">, options) {
-        const element = buildCommon.makeSpan([], [], options);
         const argNode = assertNodeType(group.args[0], "raw");
-        const loc = assertLocationSpecified(group.loc);
+        const element = buildCommon.makeSpan([], [
+            buildCommon.makeSymbol(argNode.string, "Main-Regular", "text"),
+        ], options);
 
-        element.setAttribute("data-blatex", argNode.string);
-        element.setAttribute("data-loc", loc.start + "," + loc.end);
+        if (group.args.length !== 1) {
+            const optArgNode = assertNodeType(group.args[1], "raw");
+            element.setAttribute("data-blatex", optArgNode.string);
+        }
 
         const wrapper = buildCommon.makeSpan([], [element], options);
         return wrapper;
