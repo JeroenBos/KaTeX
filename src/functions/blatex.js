@@ -1,5 +1,5 @@
 // @flow
-import type {AnyParseNode,ParseNode} from "../parseNode";
+import type {AnyParseNode, ParseNode} from "../parseNode";
 import {assertNodeType} from "../parseNode";
 import SourceLocation from "../SourceLocation";
 import defineFunction from "../defineFunction";
@@ -23,15 +23,28 @@ defineFunction({
 
         const argNode = assertNodeType(args[0], "raw");
         const value = argNode.string.trim();
+        const optArgNode = !optArgs?.[0]
+          ? undefined
+          : assertNodeType(optArgs[0], "raw");
         const funcNameTokenLoc = assertLocationSpecified(token.loc);
-        const funcCallLoc = SourceLocation.merge(funcNameTokenLoc, argNode.loc);
+        const funcCallLoc = SourceLocation.merge(
+            funcNameTokenLoc,
+            optArgNode ? optArgNode.loc : argNode.loc
+        );
         const parseNodeArgs: AnyParseNode[] = [
             {
                 type: "raw",
                 mode: parser.mode,
                 string: value,
             },
-        ]
+        ];
+        if (optArgNode) {
+            parseNodeArgs.push({
+                type: "raw",
+                mode: parser.mode,
+                string: optArgNode.string.trim(),
+            });
+        }
         const result: ParseNode<"blatex"> = {
             type: "blatex",
             mode: parser.mode,
