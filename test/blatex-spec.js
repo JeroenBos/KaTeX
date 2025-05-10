@@ -12,7 +12,7 @@ describe("\\blatex{}", function() {
         const root = assertNodeType(tree[0], "blatex");
         expect(root.type).toBe("blatex");
         expect(root.loc.start).toBe(0);
-        expect(root.loc.end).toBe(7);
+        expect(root.loc.end).toBe(9);
         expect(root.args.length).toBe(1);
         expect(root.args[0].type).toBe("raw");
         expect(root.args[0].string).toBe("");
@@ -24,7 +24,7 @@ describe("\\blatex{}", function() {
         const root = assertNodeType(tree[0], "blatex");
         expect(root.type).toBe("blatex");
         expect(root.loc.start).toBe(0);
-        expect(root.loc.end).toBe(7); // hm ideally more like 12
+        expect(root.loc.end).toBe(12);
         expect(root.args.length).toBe(1);
         expect(root.args[0].type).toBe("raw");
         expect(root.args[0].string).toBe("arg");
@@ -36,7 +36,7 @@ describe("\\blatex{}", function() {
         const root = assertNodeType(tree[0], "blatex");
         expect(root.type).toBe("blatex");
         expect(root.loc.start).toBe(0);
-        expect(root.loc.end).toBe(7);
+        expect(root.loc.end).toBe(20);
         expect(root.args.length).toBe(2);
         expect(root.args[1].type).toBe("raw");
         expect(root.args[1].string).toBe("optArg");

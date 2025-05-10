@@ -24,7 +24,7 @@ exports[`\\blatex{} renders arg 1`] = `
             style="height:0.4306em;"
       >
       </span>
-      <span data-loc="0,7">
+      <span data-loc="0,12">
         arg
       </span>
     </span>
@@ -57,7 +57,7 @@ exports[`\\blatex{} renders arg and optional arg 1`] = `
       >
       </span>
       <span data-blatex="optArg"
-            data-loc="0,7"
+            data-loc="0,20"
       >
         arg
       </span>
@@ -90,7 +90,7 @@ exports[`\\blatex{} renders mathematical arg 1`] = `
             style="height:1em;vertical-align:-0.25em;"
       >
       </span>
-      <span data-loc="0,7">
+      <span data-loc="0,17">
         \\sqrt{x}
       </span>
     </span>

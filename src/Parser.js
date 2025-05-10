@@ -605,6 +605,7 @@ export default class Parser {
                     type: "raw",
                     mode: "text",
                     string: token.text,
+                    loc: token.loc,
                 } : null;
             }
             case "primitive": {
