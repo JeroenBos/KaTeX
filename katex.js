@@ -186,6 +186,14 @@ const __domTree = {
     LineNode,
 };
 
+// undo minification for serialization:
+__domTree.Span.constructor.name = "Span";
+__domTree.Anchor.constructor.name = "Anchor";
+__domTree.SymbolNode.constructor.name = "SymbolNode";
+__domTree.SvgNode.constructor.name = "SvgNode";
+__domTree.PathNode.constructor.name = "PathNode";
+__domTree.LineNode.constructor.name = "LineNode";
+ParseError.constructor.name = "ParseError";
 
 export default {
     /**
